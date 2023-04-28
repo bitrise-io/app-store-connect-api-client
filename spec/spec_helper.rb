@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-require "app_store_connect_api"
+require 'webmock/rspec'
+require 'app_store_connect_api'
+require_relative 'support/api_requests'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -12,4 +14,6 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  config.include_context 'API requests', :api
 end

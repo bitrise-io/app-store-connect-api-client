@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe AppStoreConnectApi::Utils::HashUtils do
   describe '.deep_transform_keys' do
     subject(:deep_transform_keys) { described_class.deep_transform_keys object, &transformation }

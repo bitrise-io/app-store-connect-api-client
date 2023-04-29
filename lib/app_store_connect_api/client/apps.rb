@@ -18,7 +18,7 @@ module AppStoreConnectApi
         patch "/v1/apps/#{app_id}", data: { attributes: attributes,
                                             id: app_id,
                                             type: 'apps' },
-                                    included: Utils::RelationshipMapper.to_resource_keys(app_prices, 'appPrices')
+                                    included: Utils::RelationshipMapper.resource_keys(app_prices, 'appPrices')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_app_store_versions_for_an_app

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 RSpec.describe AppStoreConnectApi::Utils::StringUtils do
   describe '.camelize' do
     {

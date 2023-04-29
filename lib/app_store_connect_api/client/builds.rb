@@ -33,22 +33,22 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/add_access_for_beta_groups_to_a_build
       def add_build_beta_groups(build_id, beta_groups)
-        create "/v1/builds/#{build_id}/relationships/betaGroups", data: Utils::RelationshipMapper.to_resource_keys(beta_groups, 'betaGroups')
+        create "/v1/builds/#{build_id}/relationships/betaGroups", data: Utils::RelationshipMapper.resource_keys(beta_groups, 'betaGroups')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_access_for_beta_groups_to_a_build
       def remove_build_beta_groups(build_id, beta_groups)
-        delete "/v1/builds/#{build_id}/relationships/betaGroups", data: Utils::RelationshipMapper.to_resource_keys(beta_groups, 'betaGroups')
+        delete "/v1/builds/#{build_id}/relationships/betaGroups", data: Utils::RelationshipMapper.resource_keys(beta_groups, 'betaGroups')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/assign_individual_testers_to_a_build
       def add_build_beta_testers(build_id, beta_testers)
-        create "/v1/builds/#{build_id}/relationships/individualTesters", data: Utils::RelationshipMapper.to_resource_keys(beta_testers, 'betaTesters')
+        create "/v1/builds/#{build_id}/relationships/individualTesters", data: Utils::RelationshipMapper.resource_keys(beta_testers, 'betaTesters')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_individual_testers_from_a_build
       def remove_build_beta_testers(build_id, beta_testers)
-        delete "/v1/builds/#{build_id}/relationships/individualTesters", data: Utils::RelationshipMapper.to_resource_keys(beta_testers, 'betaTesters')
+        delete "/v1/builds/#{build_id}/relationships/individualTesters", data: Utils::RelationshipMapper.resource_keys(beta_testers, 'betaTesters')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/read_the_prerelease_version_of_a_build

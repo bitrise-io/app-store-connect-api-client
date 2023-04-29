@@ -37,7 +37,7 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_a_beta_tester_s_access_to_apps
       def remove_beta_tester_apps(beta_tester_id, apps)
-        delete "/v1/betaTesters/#{beta_tester_id}/relationships/apps", data: Utils::RelationshipMapper.to_resource_keys(apps, 'apps')
+        delete "/v1/betaTesters/#{beta_tester_id}/relationships/apps", data: Utils::RelationshipMapper.resource_keys(apps, 'apps')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_beta_groups_to_which_a_beta_tester_belongs
@@ -52,12 +52,12 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/add_a_beta_tester_to_beta_groups
       def add_beta_tester_beta_groups(beta_tester_id, beta_groups)
-        create "/v1/betaTesters/#{beta_tester_id}/relationships/betaGroups", data: Utils::RelationshipMapper.to_resource_keys(beta_groups, 'betaGroups')
+        create "/v1/betaTesters/#{beta_tester_id}/relationships/betaGroups", data: Utils::RelationshipMapper.resource_keys(beta_groups, 'betaGroups')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_a_beta_tester_from_beta_groups
       def remove_beta_tester_beta_groups(beta_tester_id, beta_groups)
-        delete "/v1/betaTesters/#{beta_tester_id}/relationships/betaGroups", data: Utils::RelationshipMapper.to_resource_keys(beta_groups, 'betaGroups')
+        delete "/v1/betaTesters/#{beta_tester_id}/relationships/betaGroups", data: Utils::RelationshipMapper.resource_keys(beta_groups, 'betaGroups')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_builds_individually_assigned_to_a_beta_tester
@@ -72,12 +72,12 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/individually_assign_a_beta_tester_to_builds
       def add_beta_tester_builds(beta_tester_id, builds)
-        create "/v1/betaTesters/#{beta_tester_id}/relationships/builds", data: Utils::RelationshipMapper.to_resource_keys(builds, 'builds')
+        create "/v1/betaTesters/#{beta_tester_id}/relationships/builds", data: Utils::RelationshipMapper.resource_keys(builds, 'builds')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/individually_unassign_a_beta_tester_from_builds
       def remove_beta_tester_builds(beta_tester_id, builds)
-        delete "/v1/betaTesters/#{beta_tester_id}/relationships/builds", data: Utils::RelationshipMapper.to_resource_keys(builds, 'builds')
+        delete "/v1/betaTesters/#{beta_tester_id}/relationships/builds", data: Utils::RelationshipMapper.resource_keys(builds, 'builds')
       end
     end
   end

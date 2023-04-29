@@ -48,22 +48,19 @@ RSpec.shared_context 'API requests' do # rubocop:disable RSpec/ContextWording
 
   shared_examples_for 'a DELETE endpoint' do |url:, body: {}|
     it 'calls the specified endpoint and returns the results' do
-      if body.empty?
-        stub_request(:delete, url)
-          .with(headers: { authorization: 'Bearer bearer-token' })
-          .to_return(status: 200,
-                     body: JSON.dump('data' => 'response'),
-                     headers: { content_type: 'application/json' })
-      else
-        stub_request(:delete, url)
-          .with(headers: { authorization: 'Bearer bearer-token',
-                           content_type: 'application/json' },
-                body: body)
-          .to_return(status: 200,
-                     body: JSON.dump('data' => 'response'),
-                     headers: { content_type: 'application/json' })
-      end
-      expect(subject).to eq data: 'response'
+      delete_request = if body.empty?
+                         stub_request(:delete, url)
+                           .with(headers: { authorization: 'Bearer bearer-token' })
+                           .to_return(status: 204)
+                       else
+                         stub_request(:delete, url)
+                           .with(headers: { authorization: 'Bearer bearer-token',
+                                            content_type: 'application/json' },
+                                 body: body)
+                           .to_return(status: 204)
+                       end
+      subject
+      expect(delete_request).to have_been_requested
     end
   end
 end

@@ -6,7 +6,11 @@ module AppStoreConnectApi
       class << self
         def expand(relationships)
           relationships.each_with_object({}) do |(relationship_type, resource_id), result|
-            result[relationship_type] = { data: resource_key(resource_id, relationship_to_resource_type(relationship_type)) }
+            if resource_id.is_a? Array
+              result[relationship_type] = { data: to_resource_keys(resource_id, StringUtils.camelize(relationship_type.to_s)) }
+            else
+              result[relationship_type] = { data: resource_key(resource_id, relationship_to_resource_type(relationship_type)) }
+            end
           end
         end
 

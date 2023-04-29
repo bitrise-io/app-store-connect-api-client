@@ -61,7 +61,20 @@ module AppStoreConnectApi
         req.params = camel_case(params) unless params.empty?
         req.body = camel_case(payload) unless payload.empty?
       end
-      snake_case response.body
+      result = snake_case response.body
+      process_response response, result
+    rescue Faraday::Error => error
+      raise Error, error
+    end
+
+    def process_response(response, result)
+      if response.success?
+        result
+      elsif result.respond_to? :fetch
+        raise ApiError, result.fetch(:errors, [])
+      else
+        raise Error, result
+      end
     end
 
     def camel_case(params)
@@ -82,7 +95,6 @@ module AppStoreConnectApi
                                   headers: { 'Authorization' => "Bearer #{@authorization.token}" }) do |f|
         f.request :json
         f.response :json, content_type: /\bjson$/
-        # f.response :raise_error
         f.adapter :net_http
       end
     end

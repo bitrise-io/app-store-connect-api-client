@@ -5,10 +5,15 @@ module AppStoreConnectApi
     module HashUtils
       class << self
         def deep_transform_keys(object, &block)
-          return object unless object.is_a? Hash
-
-          object.each_with_object({}) do |(key, value), result|
-            result[yield(key)] = deep_transform_keys value, &block
+          case object
+          when Hash
+            object.each_with_object({}) do |(key, value), result|
+              result[yield(key)] = deep_transform_keys value, &block
+            end
+          when Array
+            object.map { |item| deep_transform_keys item, &block }
+          else
+            object
           end
         end
       end

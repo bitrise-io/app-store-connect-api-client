@@ -29,6 +29,14 @@ RSpec.describe AppStoreConnectApi::Utils::HashUtils do
                                         }
     end
 
+    context 'when the object contains an array' do
+      let(:object) { [{ k1: 'test' }, { k2: 'data' }] }
+
+      it 'digs down into arrays as well' do
+        expect(deep_transform_keys).to eq [{ 'k1_transformed' => 'test' }, { 'k2_transformed' => 'data' }]
+      end
+    end
+
     context 'when the object is not a Hash' do
       let(:object) { 'unchanged' }
 

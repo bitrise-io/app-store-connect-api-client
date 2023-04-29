@@ -12,6 +12,7 @@ require_relative 'client/apps'
 require_relative 'client/beta_app_review_submissions'
 require_relative 'client/beta_build_localizations'
 require_relative 'client/beta_groups'
+require_relative 'client/beta_tester_invitations'
 require_relative 'client/beta_testers'
 require_relative 'client/build_beta_details'
 require_relative 'client/builds'
@@ -28,6 +29,7 @@ module AppStoreConnectApi
     include BetaAppReviewSubmissions
     include BetaBuildLocalizations
     include BetaGroups
+    include BetaTesterInvitations
     include BetaTesters
     include BuildBetaDetails
     include Builds

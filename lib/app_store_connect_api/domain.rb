@@ -9,6 +9,7 @@ require_relative 'domain/beta_app_localizations'
 require_relative 'domain/beta_app_review_submissions'
 require_relative 'domain/beta_build_localizations'
 require_relative 'domain/beta_groups'
+require_relative 'domain/beta_license_agreements'
 require_relative 'domain/beta_tester_invitations'
 require_relative 'domain/beta_testers'
 require_relative 'domain/build_beta_details'
@@ -28,6 +29,7 @@ module AppStoreConnectApi
     include BetaAppReviewSubmissions
     include BetaBuildLocalizations
     include BetaGroups
+    include BetaLicenseAgreements
     include BetaTesterInvitations
     include BetaTesters
     include BuildBetaDetails

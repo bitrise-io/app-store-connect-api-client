@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::AppStoreVersions, :api do
+RSpec.describe AppStoreConnectApi::Domain::AppStoreVersions, :api do
   describe '#app_store_version' do
     subject { client.app_store_version 'app-store-version-id', include: 'build' }
 

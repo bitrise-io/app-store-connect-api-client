@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::Builds, :api do
+RSpec.describe AppStoreConnectApi::Domain::Builds, :api do
   describe '#builds' do
     subject { client.builds limit: 10 }
 

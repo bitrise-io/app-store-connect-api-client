@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::BuildBetaNotifications, :api do
+RSpec.describe AppStoreConnectApi::Domain::BuildBetaNotifications, :api do
   describe '#create_build_beta_notification' do
     subject { client.create_build_beta_notification build: 'build-id' }
 

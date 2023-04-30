@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::BetaLicenseAgreements, :api do
+RSpec.describe AppStoreConnectApi::Domain::BetaLicenseAgreements, :api do
   describe '#beta_license_agreements' do
     subject { client.beta_license_agreements limit: 10 }
 

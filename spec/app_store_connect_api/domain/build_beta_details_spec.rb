@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::BuildBetaDetails, :api do
+RSpec.describe AppStoreConnectApi::Domain::BuildBetaDetails, :api do
   describe '#build_beta_details' do
     subject { client.build_beta_details limit: 10 }
 

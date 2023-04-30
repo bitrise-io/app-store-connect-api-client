@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::Apps, :api do
+RSpec.describe AppStoreConnectApi::Domain::Apps, :api do
   describe '#apps' do
     subject { client.apps limit: 10 }
 

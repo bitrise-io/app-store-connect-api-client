@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::PrereleaseVersions, :api do
+RSpec.describe AppStoreConnectApi::Domain::PrereleaseVersions, :api do
   describe '#prerelease_versions' do
     subject { client.prerelease_versions limit: 10 }
 

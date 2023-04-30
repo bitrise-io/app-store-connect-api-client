@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::AppStoreVersionReleaseRequests, :api do
+RSpec.describe AppStoreConnectApi::Domain::AppStoreVersionReleaseRequests, :api do
   describe '#create_app_store_version_release_request' do
     subject { client.create_app_store_version_release_request app_store_version: 'app-store-version-id' }
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::BetaBuildLocalizations, :api do
+RSpec.describe AppStoreConnectApi::Domain::BetaBuildLocalizations, :api do
   describe '#beta_build_localizations' do
     subject { client.beta_build_localizations include: 'build' }
 

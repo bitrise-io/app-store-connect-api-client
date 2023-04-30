@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::BetaAppLocalizations, :api do
+RSpec.describe AppStoreConnectApi::Domain::BetaAppLocalizations, :api do
   describe '#beta_app_localizations' do
     subject { client.beta_app_localizations limit: 10 }
 

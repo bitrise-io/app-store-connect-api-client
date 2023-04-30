@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::AppStoreVersionPhasedReleases, :api do
+RSpec.describe AppStoreConnectApi::Domain::AppStoreVersionPhasedReleases, :api do
   describe '#create_app_store_version_phased_release' do
     subject { client.create_app_store_version_phased_release({ phased_release_state: 'INACTIVE' }, app_store_version: 'app-store-version-id') }
 

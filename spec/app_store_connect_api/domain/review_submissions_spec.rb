@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::ReviewSubmissions, :api do
+RSpec.describe AppStoreConnectApi::Domain::ReviewSubmissions, :api do
   describe '#review_submissions' do
     subject { client.review_submissions include: 'items' }
 

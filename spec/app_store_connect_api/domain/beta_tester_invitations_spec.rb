@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::BetaTesterInvitations, :api do
+RSpec.describe AppStoreConnectApi::Domain::BetaTesterInvitations, :api do
   describe '#create_beta_tester_invitation' do
     subject { client.create_beta_tester_invitation app: 'app-id', beta_tester: 'beta-tester-id' }
 

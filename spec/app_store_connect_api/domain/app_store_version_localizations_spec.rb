@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::AppStoreVersionLocalizations, :api do
+RSpec.describe AppStoreConnectApi::Domain::AppStoreVersionLocalizations, :api do
   describe '#app_store_version_localization' do
     subject { client.app_store_version_localization 'app-store-version-localization-id', include: 'appStoreVersion' }
 

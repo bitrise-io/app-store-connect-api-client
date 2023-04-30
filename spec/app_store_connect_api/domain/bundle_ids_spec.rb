@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::BundleIds, :api do
+RSpec.describe AppStoreConnectApi::Domain::BundleIds, :api do
   describe '#bundle_ids' do
     subject { client.bundle_ids limit: 10 }
 

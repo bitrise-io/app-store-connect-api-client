@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe AppStoreConnectApi::Client::BetaAppReviewSubmissions, :api do
+RSpec.describe AppStoreConnectApi::Domain::BetaAppReviewSubmissions, :api do
   describe '#beta_app_review_submissions' do
     subject { client.beta_app_review_submissions include: 'build' }
 

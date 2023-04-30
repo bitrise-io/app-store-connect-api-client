@@ -50,24 +50,24 @@ RSpec.describe AppStoreConnectApi::Client::BetaTesters, :api do
     subject { client.remove_beta_tester_apps 'beta-tester-id', ['app-id1', 'app-id2'] }
 
     it_behaves_like 'a DELETE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/betaTesters/beta-tester-id/relationships/apps',
-                    body: {
-                      data: [{ id: 'app-id1', type: 'apps' },
-                             { id: 'app-id2', type: 'apps' }]
-                    }
+                                         body: {
+                                           data: [{ id: 'app-id1', type: 'apps' },
+                                                  { id: 'app-id2', type: 'apps' }]
+                                         }
   end
 
   describe '#beta_tester_beta_groups' do
     subject { client.beta_tester_beta_groups 'beta-tester-id', limit: 10 }
 
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/betaTesters/beta-tester-id/betaGroups',
-                    query_params: { limit: 10 }
+                                      query_params: { limit: 10 }
   end
 
   describe '#beta_tester_beta_group_ids' do
     subject { client.beta_tester_beta_group_ids 'beta-tester-id', limit: 10 }
 
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/betaTesters/beta-tester-id/relationships/betaGroups',
-                    query_params: { limit: 10 }
+                                      query_params: { limit: 10 }
   end
 
   describe '#add_beta_tester_beta_groups' do

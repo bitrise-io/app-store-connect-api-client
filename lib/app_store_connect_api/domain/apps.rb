@@ -14,11 +14,11 @@ module AppStoreConnectApi
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/modify_an_app
-      def update_app(app_id, attributes = {}, app_prices = [])
+      def update_app(app_id, attributes = {}, app_price_ids = [])
         patch "/v1/apps/#{app_id}", data: { attributes: attributes,
                                             id: app_id,
                                             type: 'apps' },
-                                    included: Utils::RelationshipMapper.resource_keys(app_prices, 'appPrices')
+                                    included: Utils::RelationshipMapper.resource_keys(app_price_ids, 'appPrices')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_app_store_versions_for_an_app

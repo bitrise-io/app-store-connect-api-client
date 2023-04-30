@@ -48,13 +48,13 @@ module AppStoreConnectApi
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/add_beta_testers_to_a_beta_group
-      def add_beta_group_beta_testers(beta_group_id, beta_testers)
-        create "/v1/betaGroups/#{beta_group_id}/relationships/betaTesters", data: Utils::RelationshipMapper.resource_keys(beta_testers, 'betaTesters')
+      def add_beta_group_beta_testers(beta_group_id, beta_tester_ids)
+        create "/v1/betaGroups/#{beta_group_id}/relationships/betaTesters", data: Utils::RelationshipMapper.resource_keys(beta_tester_ids, 'betaTesters')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_beta_testers_from_a_beta_group
-      def remove_beta_group_beta_testers(beta_group_id, beta_testers)
-        delete "/v1/betaGroups/#{beta_group_id}/relationships/betaTesters", data: Utils::RelationshipMapper.resource_keys(beta_testers, 'betaTesters')
+      def remove_beta_group_beta_testers(beta_group_id, beta_tester_ids)
+        delete "/v1/betaGroups/#{beta_group_id}/relationships/betaTesters", data: Utils::RelationshipMapper.resource_keys(beta_tester_ids, 'betaTesters')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_builds_for_a_beta_group
@@ -68,13 +68,13 @@ module AppStoreConnectApi
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/add_builds_to_a_beta_group
-      def add_beta_group_builds(beta_group_id, builds)
-        create "/v1/betaGroups/#{beta_group_id}/relationships/builds", data: Utils::RelationshipMapper.resource_keys(builds, 'builds')
+      def add_beta_group_builds(beta_group_id, build_ids)
+        create "/v1/betaGroups/#{beta_group_id}/relationships/builds", data: Utils::RelationshipMapper.resource_keys(build_ids, 'builds')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_builds_from_a_beta_group
-      def remove_beta_group_builds(beta_group_id, builds)
-        delete "/v1/betaGroups/#{beta_group_id}/relationships/builds", data: Utils::RelationshipMapper.resource_keys(builds, 'builds')
+      def remove_beta_group_builds(beta_group_id, build_ids)
+        delete "/v1/betaGroups/#{beta_group_id}/relationships/builds", data: Utils::RelationshipMapper.resource_keys(build_ids, 'builds')
       end
     end
   end

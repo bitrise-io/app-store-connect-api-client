@@ -26,9 +26,39 @@ module AppStoreConnectApi
         get "/v1/builds/#{build_id}/app", options
       end
 
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/read_the_app_encryption_declaration_of_a_build
+      def build_app_encryption_declaration(build_id, options = {})
+        get "/v1/builds/#{build_id}/appEncryptionDeclaration", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/get_the_app_encryption_declaration_id_for_a_build
+      def build_app_encryption_declaration_id(build_id)
+        get "/v1/builds/#{build_id}/relationships/appEncryptionDeclaration"
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/assign_the_app_encryption_declaration_for_a_build
+      def update_build_app_encryption_declaration(build_id, app_encryption_declaration_id)
+        patch "/v1/builds/#{build_id}/relationships/appEncryptionDeclaration", data: { id: app_encryption_declaration_id, type: 'appEncryptionDeclarations' }
+      end
+
       # @see https://developer.apple.com/documentation/appstoreconnectapi/read_the_app_store_version_information_of_a_build
       def build_app_store_version(build_id, options = {})
         get "/v1/builds/#{build_id}/appStoreVersion", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/read_the_beta_app_review_submission_of_a_build
+      def build_beta_app_review_submission(build_id, options = {})
+        get "/v1/builds/#{build_id}/betaAppReviewSubmission", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_beta_build_localizations_of_a_build
+      def build_beta_build_localizations(build_id, options = {})
+        get "/v1/builds/#{build_id}/betaBuildLocalizations", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/read_the_build_beta_details_information_of_a_build
+      def build_build_beta_detail(build_id, options = {})
+        get "/v1/builds/#{build_id}/buildBetaDetail", options
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/add_access_for_beta_groups_to_a_build
@@ -41,13 +71,23 @@ module AppStoreConnectApi
         delete "/v1/builds/#{build_id}/relationships/betaGroups", data: Utils::RelationshipMapper.resource_keys(beta_groups, 'betaGroups')
       end
 
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_individual_testers_for_a_build
+      def build_individual_testers(build_id, options = {})
+        get "/v1/builds/#{build_id}/individualTesters", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/get_all_resource_ids_of_individual_testers_for_a_build
+      def build_individual_tester_ids(build_id, options = {})
+        get "/v1/builds/#{build_id}/relationships/individualTesters", options
+      end
+
       # @see https://developer.apple.com/documentation/appstoreconnectapi/assign_individual_testers_to_a_build
-      def add_build_beta_testers(build_id, beta_testers)
+      def add_build_individual_testers(build_id, beta_testers)
         create "/v1/builds/#{build_id}/relationships/individualTesters", data: Utils::RelationshipMapper.resource_keys(beta_testers, 'betaTesters')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_individual_testers_from_a_build
-      def remove_build_beta_testers(build_id, beta_testers)
+      def remove_build_individual_testers(build_id, beta_testers)
         delete "/v1/builds/#{build_id}/relationships/individualTesters", data: Utils::RelationshipMapper.resource_keys(beta_testers, 'betaTesters')
       end
 

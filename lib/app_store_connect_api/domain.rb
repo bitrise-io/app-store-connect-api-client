@@ -19,6 +19,7 @@ require_relative 'domain/builds'
 require_relative 'domain/bundle_id_capabilities'
 require_relative 'domain/bundle_ids'
 require_relative 'domain/certificates'
+require_relative 'domain/devices'
 require_relative 'domain/prerelease_versions'
 require_relative 'domain/review_submission_items'
 require_relative 'domain/review_submissions'
@@ -44,6 +45,7 @@ module AppStoreConnectApi
     include BundleIdCapabilities
     include BundleIds
     include Certificates
+    include Devices
     include PrereleaseVersions
     include ReviewSubmissionItems
     include ReviewSubmissions

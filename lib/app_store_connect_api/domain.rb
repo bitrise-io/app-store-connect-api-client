@@ -6,6 +6,7 @@ require_relative 'domain/app_store_version_release_requests'
 require_relative 'domain/app_store_versions'
 require_relative 'domain/apps'
 require_relative 'domain/beta_app_localizations'
+require_relative 'domain/beta_app_review_details'
 require_relative 'domain/beta_app_review_submissions'
 require_relative 'domain/beta_build_localizations'
 require_relative 'domain/beta_groups'
@@ -26,6 +27,7 @@ module AppStoreConnectApi
     include AppStoreVersions
     include Apps
     include BetaAppLocalizations
+    include BetaAppReviewDetails
     include BetaAppReviewSubmissions
     include BetaBuildLocalizations
     include BetaGroups

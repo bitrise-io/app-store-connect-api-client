@@ -16,6 +16,7 @@ require_relative 'client/beta_tester_invitations'
 require_relative 'client/beta_testers'
 require_relative 'client/build_beta_details'
 require_relative 'client/builds'
+require_relative 'client/prerelease_versions'
 require_relative 'client/review_submission_items'
 require_relative 'client/review_submissions'
 
@@ -33,6 +34,7 @@ module AppStoreConnectApi
     include BetaTesters
     include BuildBetaDetails
     include Builds
+    include PrereleaseVersions
     include ReviewSubmissionItems
     include ReviewSubmissions
 

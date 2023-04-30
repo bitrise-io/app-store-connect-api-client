@@ -16,6 +16,7 @@ require_relative 'domain/beta_testers'
 require_relative 'domain/build_beta_details'
 require_relative 'domain/build_beta_notifications'
 require_relative 'domain/builds'
+require_relative 'domain/bundle_id_capabilities'
 require_relative 'domain/bundle_ids'
 require_relative 'domain/prerelease_versions'
 require_relative 'domain/review_submission_items'
@@ -39,6 +40,7 @@ module AppStoreConnectApi
     include BuildBetaDetails
     include BuildBetaNotifications
     include Builds
+    include BundleIdCapabilities
     include BundleIds
     include PrereleaseVersions
     include ReviewSubmissionItems

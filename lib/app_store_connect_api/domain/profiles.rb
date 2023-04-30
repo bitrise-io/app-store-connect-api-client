@@ -15,9 +15,9 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/create_a_profile
       def create_profile(attributes, relationships)
-        create '/v1/profiles', data: { attributes: attributes,
-                                       relationships: Utils::RelationshipMapper.expand(relationships),
-                                       type: 'profiles' }
+        post '/v1/profiles', data: { attributes: attributes,
+                                     relationships: Utils::RelationshipMapper.expand(relationships),
+                                     type: 'profiles' }
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/delete_a_profile

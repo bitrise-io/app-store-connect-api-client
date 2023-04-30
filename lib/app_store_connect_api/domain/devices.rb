@@ -15,8 +15,8 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/register_a_new_device
       def create_device(attributes)
-        create '/v1/devices', data: { attributes: attributes,
-                                      type: 'devices' }
+        post '/v1/devices', data: { attributes: attributes,
+                                    type: 'devices' }
       end
       alias :register_device :create_device
 

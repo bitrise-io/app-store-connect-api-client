@@ -15,9 +15,9 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/invite_a_user
       def create_user_invitation(attributes, relationships = {})
-        create '/v1/userInvitations', data: { attributes: attributes,
-                                              relationships: Utils::RelationshipMapper.expand(relationships, 'visibleApps' => 'apps'),
-                                              type: 'user_invitations' }
+        post '/v1/userInvitations', data: { attributes: attributes,
+                                            relationships: Utils::RelationshipMapper.expand(relationships, 'visibleApps' => 'apps'),
+                                            type: 'user_invitations' }
       end
       alias :invite_user :create_user_invitation
 

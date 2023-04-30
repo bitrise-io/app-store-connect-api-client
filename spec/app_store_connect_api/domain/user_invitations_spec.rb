@@ -18,12 +18,12 @@ RSpec.describe AppStoreConnectApi::Domain::UserInvitations, :api do
   describe '#create_user_invitation' do
     subject { client.create_user_invitation({ email: 'dev@example.com' }, visible_apps: ['app-id']) }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/userInvitations',
-                                         body: {
-                                           data: { attributes: { email: 'dev@example.com' },
-                                                   relationships: { visibleApps: { data: [{ id: 'app-id', type: 'apps' }] } },
-                                                   type: 'user_invitations' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/userInvitations',
+                                       body: {
+                                         data: { attributes: { email: 'dev@example.com' },
+                                                 relationships: { visibleApps: { data: [{ id: 'app-id', type: 'apps' }] } },
+                                                 type: 'user_invitations' }
+                                       }
   end
 
   describe '#delete_user_invitation' do

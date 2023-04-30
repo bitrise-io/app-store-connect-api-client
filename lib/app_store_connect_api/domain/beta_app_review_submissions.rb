@@ -15,8 +15,8 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/submit_an_app_for_beta_review
       def create_beta_app_review_submission(relationships)
-        create '/v1/betaAppReviewSubmissions', data: { relationships: Utils::RelationshipMapper.expand(relationships),
-                                                       type: 'betaAppReviewSubmissions' }
+        post '/v1/betaAppReviewSubmissions', data: { relationships: Utils::RelationshipMapper.expand(relationships),
+                                                     type: 'betaAppReviewSubmissions' }
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/read_the_build_information_of_a_beta_app_review_submission

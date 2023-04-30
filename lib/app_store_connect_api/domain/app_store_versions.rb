@@ -10,9 +10,9 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/create_an_app_store_version
       def create_app_store_version(attributes, relationships)
-        create '/v1/appStoreVersions', data: { attributes: attributes,
-                                               relationships: Utils::RelationshipMapper.expand(relationships),
-                                               type: 'appStoreVersions' }
+        post '/v1/appStoreVersions', data: { attributes: attributes,
+                                             relationships: Utils::RelationshipMapper.expand(relationships),
+                                             type: 'appStoreVersions' }
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/modify_an_app_store_version

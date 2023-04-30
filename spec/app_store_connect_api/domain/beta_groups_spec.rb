@@ -18,12 +18,12 @@ RSpec.describe AppStoreConnectApi::Domain::BetaGroups, :api do
   describe '#create_beta_group' do
     subject { client.create_beta_group({ name: 'Q/A' }, app: 'app-id') }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/betaGroups',
-                                         body: {
-                                           data: { attributes: { name: 'Q/A' },
-                                                   relationships: { app: { data: { id: 'app-id', type: 'apps' } } },
-                                                   type: 'betaGroups' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/betaGroups',
+                                       body: {
+                                         data: { attributes: { name: 'Q/A' },
+                                                 relationships: { app: { data: { id: 'app-id', type: 'apps' } } },
+                                                 type: 'betaGroups' }
+                                       }
   end
 
   describe '#update_beta_group' do
@@ -67,11 +67,11 @@ RSpec.describe AppStoreConnectApi::Domain::BetaGroups, :api do
   describe '#add_beta_group_beta_testers' do
     subject { client.add_beta_group_beta_testers 'beta-group-id', ['tester-id1', 'tester-id2'] }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/betaGroups/beta-group-id/relationships/betaTesters',
-                                         body: {
-                                           data: [{ id: 'tester-id1', type: 'betaTesters' },
-                                                  { id: 'tester-id2', type: 'betaTesters' }]
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/betaGroups/beta-group-id/relationships/betaTesters',
+                                       body: {
+                                         data: [{ id: 'tester-id1', type: 'betaTesters' },
+                                                { id: 'tester-id2', type: 'betaTesters' }]
+                                       }
   end
 
   describe '#remove_beta_group_beta_testers' do
@@ -101,11 +101,11 @@ RSpec.describe AppStoreConnectApi::Domain::BetaGroups, :api do
   describe '#add_beta_group_builds' do
     subject { client.add_beta_group_builds 'beta-group-id', ['build-id1', 'build-id2'] }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/betaGroups/beta-group-id/relationships/builds',
-                                         body: {
-                                           data: [{ id: 'build-id1', type: 'builds' },
-                                                  { id: 'build-id2', type: 'builds' }]
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/betaGroups/beta-group-id/relationships/builds',
+                                       body: {
+                                         data: [{ id: 'build-id1', type: 'builds' },
+                                                { id: 'build-id2', type: 'builds' }]
+                                       }
   end
 
   describe '#remove_beta_group_builds' do

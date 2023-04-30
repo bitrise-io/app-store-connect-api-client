@@ -20,7 +20,7 @@ module AppStoreConnectApi
       call_api :get, path, options
     end
 
-    def create(path, body)
+    def post(path, body)
       call_api :post, path, {}, body
     end
 

@@ -5,9 +5,9 @@ module AppStoreConnectApi
     module BundleIdCapabilities
       # @see https://developer.apple.com/documentation/appstoreconnectapi/enable_a_capability
       def create_bundle_id_capability(attributes, relationships)
-        create '/v1/bundleIdCapabilities', data: { attributes: attributes,
-                                                   relationships: Utils::RelationshipMapper.expand(relationships),
-                                                   type: 'bundleIdCapabilities' }
+        post '/v1/bundleIdCapabilities', data: { attributes: attributes,
+                                                 relationships: Utils::RelationshipMapper.expand(relationships),
+                                                 type: 'bundleIdCapabilities' }
       end
       alias :enable_bundle_id_capability :create_bundle_id_capability
 

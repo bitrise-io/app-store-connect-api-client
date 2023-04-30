@@ -20,7 +20,7 @@ RSpec.shared_context 'API requests' do # rubocop:disable RSpec/ContextWording
     end
   end
 
-  shared_examples_for 'a CREATE endpoint' do |url:, body:|
+  shared_examples_for 'a POST endpoint' do |url:, body:|
     it 'calls the specified endpoint and returns the results' do
       stub_request(:post, url)
         .with(headers: { authorization: 'Bearer bearer-token',

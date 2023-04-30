@@ -18,11 +18,11 @@ RSpec.describe AppStoreConnectApi::Domain::Certificates, :api do
   describe '#create_certificate' do
     subject { client.create_certificate certificate_type: 'IOS_DEVELOPMENT', csr_content: 'content' }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/certificates',
-                                         body: {
-                                           data: { attributes: { certificateType: 'IOS_DEVELOPMENT', csrContent: 'content' },
-                                                   type: 'certificates' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/certificates',
+                                       body: {
+                                         data: { attributes: { certificateType: 'IOS_DEVELOPMENT', csrContent: 'content' },
+                                                 type: 'certificates' }
+                                       }
   end
 
   describe '#delete_certificate' do

@@ -15,8 +15,8 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/register_a_new_bundle_id
       def create_bundle_id(attributes)
-        create '/v1/bundleIds', data: { attributes: attributes,
-                                        type: 'bundleIds' }
+        post '/v1/bundleIds', data: { attributes: attributes,
+                                      type: 'bundleIds' }
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/modify_a_bundle_id

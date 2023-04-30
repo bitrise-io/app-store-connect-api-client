@@ -38,7 +38,7 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/add_visible_apps_to_a_user
       def add_user_visible_apps(user_id, visible_app_ids)
-        create "/v1/users/#{user_id}/relationships/visibleApps", data: Utils::RelationshipMapper.resource_keys(visible_app_ids, 'apps')
+        post "/v1/users/#{user_id}/relationships/visibleApps", data: Utils::RelationshipMapper.resource_keys(visible_app_ids, 'apps')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/replace_the_list_of_visible_apps_for_a_user

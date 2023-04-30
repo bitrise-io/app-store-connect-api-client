@@ -22,11 +22,11 @@ RSpec.describe AppStoreConnectApi::Domain::SandboxTesters, :api do
   describe '#clear_sandbox_tester_purchase_history' do
     subject { client.clear_sandbox_tester_purchase_history ['tester-id1', 'tester-id2'] }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v2/sandboxTestersClearPurchaseHistoryRequest',
-                                         body: {
-                                           data: { relationships: { sandboxTesters: { data: [{ id: 'tester-id1', type: 'sandboxTesters' },
-                                                                                             { id: 'tester-id2', type: 'sandboxTesters' }] } },
-                                                   type: 'sandboxTestersClearPurchaseHistoryRequest' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v2/sandboxTestersClearPurchaseHistoryRequest',
+                                       body: {
+                                         data: { relationships: { sandboxTesters: { data: [{ id: 'tester-id1', type: 'sandboxTesters' },
+                                                                                           { id: 'tester-id2', type: 'sandboxTesters' }] } },
+                                                 type: 'sandboxTestersClearPurchaseHistoryRequest' }
+                                       }
   end
 end

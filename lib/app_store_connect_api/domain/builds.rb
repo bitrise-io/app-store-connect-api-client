@@ -63,7 +63,7 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/add_access_for_beta_groups_to_a_build
       def add_build_beta_groups(build_id, beta_group_ids)
-        create "/v1/builds/#{build_id}/relationships/betaGroups", data: Utils::RelationshipMapper.resource_keys(beta_group_ids, 'betaGroups')
+        post "/v1/builds/#{build_id}/relationships/betaGroups", data: Utils::RelationshipMapper.resource_keys(beta_group_ids, 'betaGroups')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_access_for_beta_groups_to_a_build
@@ -83,7 +83,7 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/assign_individual_testers_to_a_build
       def add_build_individual_testers(build_id, beta_tester_ids)
-        create "/v1/builds/#{build_id}/relationships/individualTesters", data: Utils::RelationshipMapper.resource_keys(beta_tester_ids, 'betaTesters')
+        post "/v1/builds/#{build_id}/relationships/individualTesters", data: Utils::RelationshipMapper.resource_keys(beta_tester_ids, 'betaTesters')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_individual_testers_from_a_build

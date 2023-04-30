@@ -15,9 +15,9 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/create_a_beta_tester
       def create_beta_tester(attributes, relationships)
-        create '/v1/betaTesters', data: { attributes: attributes,
-                                          relationships: Utils::RelationshipMapper.expand(relationships),
-                                          type: 'betaTesters' }
+        post '/v1/betaTesters', data: { attributes: attributes,
+                                        relationships: Utils::RelationshipMapper.expand(relationships),
+                                        type: 'betaTesters' }
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/delete_a_beta_tester
@@ -52,7 +52,7 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/add_a_beta_tester_to_beta_groups
       def add_beta_tester_beta_groups(beta_tester_id, beta_group_ids)
-        create "/v1/betaTesters/#{beta_tester_id}/relationships/betaGroups", data: Utils::RelationshipMapper.resource_keys(beta_group_ids, 'betaGroups')
+        post "/v1/betaTesters/#{beta_tester_id}/relationships/betaGroups", data: Utils::RelationshipMapper.resource_keys(beta_group_ids, 'betaGroups')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_a_beta_tester_from_beta_groups
@@ -72,7 +72,7 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/individually_assign_a_beta_tester_to_builds
       def add_beta_tester_builds(beta_tester_id, build_ids)
-        create "/v1/betaTesters/#{beta_tester_id}/relationships/builds", data: Utils::RelationshipMapper.resource_keys(build_ids, 'builds')
+        post "/v1/betaTesters/#{beta_tester_id}/relationships/builds", data: Utils::RelationshipMapper.resource_keys(build_ids, 'builds')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/individually_unassign_a_beta_tester_from_builds

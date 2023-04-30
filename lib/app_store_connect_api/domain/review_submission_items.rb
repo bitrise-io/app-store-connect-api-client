@@ -5,8 +5,8 @@ module AppStoreConnectApi
     module ReviewSubmissionItems
       # @see https://developer.apple.com/documentation/appstoreconnectapi/post_v1_reviewsubmissionitems
       def create_review_submission_item(relationships)
-        create '/v1/reviewSubmissionItems', data: { relationships: Utils::RelationshipMapper.expand(relationships),
-                                                    type: 'reviewSubmissionItems' }
+        post '/v1/reviewSubmissionItems', data: { relationships: Utils::RelationshipMapper.expand(relationships),
+                                                  type: 'reviewSubmissionItems' }
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/patch_v1_reviewsubmissionitems_id

@@ -50,11 +50,11 @@ RSpec.describe AppStoreConnectApi::Domain::Users, :api do
   describe '#add_user_visible_apps' do
     subject { client.add_user_visible_apps 'user-id', ['app-id1', 'app-id2'] }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/users/user-id/relationships/visibleApps',
-                                         body: {
-                                           data: [{ id: 'app-id1', type: 'apps' },
-                                                  { id: 'app-id2', type: 'apps' }]
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/users/user-id/relationships/visibleApps',
+                                       body: {
+                                         data: [{ id: 'app-id1', type: 'apps' },
+                                                { id: 'app-id2', type: 'apps' }]
+                                       }
   end
 
   describe '#replace_user_visible_apps' do

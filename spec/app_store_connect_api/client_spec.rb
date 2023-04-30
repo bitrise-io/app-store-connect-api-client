@@ -138,8 +138,8 @@ RSpec.describe AppStoreConnectApi::Client do
     include_examples :it_raises_an_error_if_the_request_failed
   end
 
-  describe '#create' do
-    subject(:perform_request) { client.create '/test/endpoint', attributes }
+  describe '#post' do
+    subject(:perform_request) { client.post '/test/endpoint', attributes }
 
     let(:attributes) { { attribute: 'value' } }
     let(:body) { { attribute: 'value' } }

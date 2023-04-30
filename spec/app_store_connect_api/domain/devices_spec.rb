@@ -18,11 +18,11 @@ RSpec.describe AppStoreConnectApi::Domain::Devices, :api do
   describe '#create_device' do
     subject { client.create_device name: 'Device name', platform: 'IOS', udid: 'id' }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/devices',
-                                         body: {
-                                           data: { attributes: { name: 'Device name', platform: 'IOS', udid: 'id' },
-                                                   type: 'devices' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/devices',
+                                       body: {
+                                         data: { attributes: { name: 'Device name', platform: 'IOS', udid: 'id' },
+                                                 type: 'devices' }
+                                       }
   end
 
   describe '#update_device' do

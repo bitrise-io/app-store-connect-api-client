@@ -15,9 +15,9 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/create_a_beta_build_localization
       def create_beta_build_localization(attributes, relationships)
-        create '/v1/betaBuildLocalizations', data: { attributes: attributes,
-                                                     relationships: Utils::RelationshipMapper.expand(relationships),
-                                                     type: 'betaBuildLocalizations' }
+        post '/v1/betaBuildLocalizations', data: { attributes: attributes,
+                                                   relationships: Utils::RelationshipMapper.expand(relationships),
+                                                   type: 'betaBuildLocalizations' }
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/modify_a_beta_build_localization

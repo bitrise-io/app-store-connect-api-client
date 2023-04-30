@@ -4,12 +4,12 @@ RSpec.describe AppStoreConnectApi::Domain::AppStoreVersionPhasedReleases, :api d
   describe '#create_app_store_version_phased_release' do
     subject { client.create_app_store_version_phased_release({ phased_release_state: 'INACTIVE' }, app_store_version: 'app-store-version-id') }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appStoreVersionPhasedReleases',
-                                         body: {
-                                           data: { attributes: { phasedReleaseState: 'INACTIVE' },
-                                                   relationships: { appStoreVersion: { data: { id: 'app-store-version-id', type: 'appStoreVersions' } } },
-                                                   type: 'appStoreVersionPhasedReleases' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appStoreVersionPhasedReleases',
+                                       body: {
+                                         data: { attributes: { phasedReleaseState: 'INACTIVE' },
+                                                 relationships: { appStoreVersion: { data: { id: 'app-store-version-id', type: 'appStoreVersions' } } },
+                                                 type: 'appStoreVersionPhasedReleases' }
+                                       }
   end
 
   describe '#update_app_store_version_phased_release' do

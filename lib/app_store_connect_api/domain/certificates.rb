@@ -15,8 +15,8 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/create_a_certificate
       def create_certificate(attributes)
-        create '/v1/certificates', data: { attributes: attributes,
-                                           type: 'certificates' }
+        post '/v1/certificates', data: { attributes: attributes,
+                                         type: 'certificates' }
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/revoke_a_certificate

@@ -18,13 +18,13 @@ RSpec.describe AppStoreConnectApi::Domain::Profiles, :api do
   describe '#create_profile' do
     subject { client.create_profile({ name: 'Name', profile_type: 'IOS_APP_DEVELOPMENT' }, bundle_id: 'bundle-id-id', certificates: ['certificate-id']) }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/profiles',
-                                         body: {
-                                           data: { attributes: { name: 'Name', profileType: 'IOS_APP_DEVELOPMENT' },
-                                                   relationships: { bundleId: { data: { id: 'bundle-id-id', type: 'bundleIds' } },
-                                                                    certificates: { data: [{ id: 'certificate-id', type: 'certificates' }] } },
-                                                   type: 'profiles' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/profiles',
+                                       body: {
+                                         data: { attributes: { name: 'Name', profileType: 'IOS_APP_DEVELOPMENT' },
+                                                 relationships: { bundleId: { data: { id: 'bundle-id-id', type: 'bundleIds' } },
+                                                                  certificates: { data: [{ id: 'certificate-id', type: 'certificates' }] } },
+                                                 type: 'profiles' }
+                                       }
   end
 
   describe '#delete_profile' do

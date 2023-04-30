@@ -15,9 +15,9 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/create_a_beta_group
       def create_beta_group(attributes, relationships)
-        create '/v1/betaGroups', data: { attributes: attributes,
-                                         relationships: Utils::RelationshipMapper.expand(relationships),
-                                         type: 'betaGroups' }
+        post '/v1/betaGroups', data: { attributes: attributes,
+                                       relationships: Utils::RelationshipMapper.expand(relationships),
+                                       type: 'betaGroups' }
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/modify_a_beta_group
@@ -49,7 +49,7 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/add_beta_testers_to_a_beta_group
       def add_beta_group_beta_testers(beta_group_id, beta_tester_ids)
-        create "/v1/betaGroups/#{beta_group_id}/relationships/betaTesters", data: Utils::RelationshipMapper.resource_keys(beta_tester_ids, 'betaTesters')
+        post "/v1/betaGroups/#{beta_group_id}/relationships/betaTesters", data: Utils::RelationshipMapper.resource_keys(beta_tester_ids, 'betaTesters')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_beta_testers_from_a_beta_group
@@ -69,7 +69,7 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/add_builds_to_a_beta_group
       def add_beta_group_builds(beta_group_id, build_ids)
-        create "/v1/betaGroups/#{beta_group_id}/relationships/builds", data: Utils::RelationshipMapper.resource_keys(build_ids, 'builds')
+        post "/v1/betaGroups/#{beta_group_id}/relationships/builds", data: Utils::RelationshipMapper.resource_keys(build_ids, 'builds')
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_builds_from_a_beta_group

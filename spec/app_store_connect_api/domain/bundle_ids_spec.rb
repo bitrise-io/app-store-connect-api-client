@@ -18,11 +18,11 @@ RSpec.describe AppStoreConnectApi::Domain::BundleIds, :api do
   describe '#create_bundle_id' do
     subject { client.create_bundle_id identifier: 'id.bundle', name: 'Name', platform: 'IOS' }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/bundleIds',
-                                         body: {
-                                           data: { attributes: { identifier: 'id.bundle', name: 'Name', platform: 'IOS' },
-                                                   type: 'bundleIds' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/bundleIds',
+                                       body: {
+                                         data: { attributes: { identifier: 'id.bundle', name: 'Name', platform: 'IOS' },
+                                                 type: 'bundleIds' }
+                                       }
   end
 
   describe '#update_bundle_id' do

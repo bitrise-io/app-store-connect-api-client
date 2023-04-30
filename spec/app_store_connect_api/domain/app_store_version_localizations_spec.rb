@@ -11,12 +11,12 @@ RSpec.describe AppStoreConnectApi::Domain::AppStoreVersionLocalizations, :api do
   describe '#create_app_store_version_localization' do
     subject { client.create_app_store_version_localization({ description: 'test description' }, app_store_version: 'app-store-version-id') }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appStoreVersionLocalizations',
-                                         body: {
-                                           data: { attributes: { description: 'test description' },
-                                                   relationships: { appStoreVersion: { data: { id: 'app-store-version-id', type: 'appStoreVersions' } } },
-                                                   type: 'appStoreVersionLocalizations' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appStoreVersionLocalizations',
+                                       body: {
+                                         data: { attributes: { description: 'test description' },
+                                                 relationships: { appStoreVersion: { data: { id: 'app-store-version-id', type: 'appStoreVersions' } } },
+                                                 type: 'appStoreVersionLocalizations' }
+                                       }
   end
 
   describe '#update_app_store_version_localization' do

@@ -10,9 +10,9 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/create_an_app_store_version_localization
       def create_app_store_version_localization(attributes, relationships)
-        create '/v1/appStoreVersionLocalizations', data: { attributes: attributes,
-                                                           relationships: Utils::RelationshipMapper.expand(relationships),
-                                                           type: 'appStoreVersionLocalizations' }
+        post '/v1/appStoreVersionLocalizations', data: { attributes: attributes,
+                                                         relationships: Utils::RelationshipMapper.expand(relationships),
+                                                         type: 'appStoreVersionLocalizations' }
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/modify_an_app_store_version_localization

@@ -78,11 +78,11 @@ RSpec.describe AppStoreConnectApi::Domain::Builds, :api do
   describe '#add_build_beta_groups' do
     subject { client.add_build_beta_groups 'build-id', ['beta-group-id1', 'beta-group-id2'] }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/builds/build-id/relationships/betaGroups',
-                                         body: {
-                                           data: [{ id: 'beta-group-id1', type: 'betaGroups' },
-                                                  { id: 'beta-group-id2', type: 'betaGroups' }]
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/builds/build-id/relationships/betaGroups',
+                                       body: {
+                                         data: [{ id: 'beta-group-id1', type: 'betaGroups' },
+                                                { id: 'beta-group-id2', type: 'betaGroups' }]
+                                       }
   end
 
   describe '#remove_build_beta_groups' do
@@ -112,11 +112,11 @@ RSpec.describe AppStoreConnectApi::Domain::Builds, :api do
   describe '#add_build_individual_testers' do
     subject { client.add_build_individual_testers 'build-id', ['beta-tester-id1', 'beta-tester-id2'] }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/builds/build-id/relationships/individualTesters',
-                                         body: {
-                                           data: [{ id: 'beta-tester-id1', type: 'betaTesters' },
-                                                  { id: 'beta-tester-id2', type: 'betaTesters' }]
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/builds/build-id/relationships/individualTesters',
+                                       body: {
+                                         data: [{ id: 'beta-tester-id1', type: 'betaTesters' },
+                                                { id: 'beta-tester-id2', type: 'betaTesters' }]
+                                       }
   end
 
   describe '#remove_build_individual_testers' do

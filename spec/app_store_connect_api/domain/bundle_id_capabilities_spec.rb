@@ -4,12 +4,12 @@ RSpec.describe AppStoreConnectApi::Domain::BundleIdCapabilities, :api do
   describe '#create_bundle_id_capability' do
     subject { client.create_bundle_id_capability({ capability_type: 'ICLOUD' }, bundle_id: 'bundle-id-id') }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/bundleIdCapabilities',
-                                         body: {
-                                           data: { attributes: { capabilityType: 'ICLOUD' },
-                                                   relationships: { bundleId: { data: { id: 'bundle-id-id', type: 'bundleIds' } } },
-                                                   type: 'bundleIdCapabilities' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/bundleIdCapabilities',
+                                       body: {
+                                         data: { attributes: { capabilityType: 'ICLOUD' },
+                                                 relationships: { bundleId: { data: { id: 'bundle-id-id', type: 'bundleIds' } } },
+                                                 type: 'bundleIdCapabilities' }
+                                       }
   end
 
   describe '#update_bundle_id_capability' do

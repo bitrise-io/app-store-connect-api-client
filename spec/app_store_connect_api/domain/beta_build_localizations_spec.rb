@@ -18,12 +18,12 @@ RSpec.describe AppStoreConnectApi::Domain::BetaBuildLocalizations, :api do
   describe '#create_beta_build_localization' do
     subject { client.create_beta_build_localization({ locale: 'en-US', whats_new: 'News' }, build: 'build-id') }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/betaBuildLocalizations',
-                                         body: {
-                                           data: { attributes: { locale: 'en-US', whatsNew: 'News' },
-                                                   relationships: { build: { data: { id: 'build-id', type: 'builds' } } },
-                                                   type: 'betaBuildLocalizations' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/betaBuildLocalizations',
+                                       body: {
+                                         data: { attributes: { locale: 'en-US', whatsNew: 'News' },
+                                                 relationships: { build: { data: { id: 'build-id', type: 'builds' } } },
+                                                 type: 'betaBuildLocalizations' }
+                                       }
   end
 
   describe '#update_beta_build_localization' do

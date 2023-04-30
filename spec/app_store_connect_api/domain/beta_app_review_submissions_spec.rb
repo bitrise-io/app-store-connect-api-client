@@ -18,11 +18,11 @@ RSpec.describe AppStoreConnectApi::Domain::BetaAppReviewSubmissions, :api do
   describe '#create_beta_app_review_submission' do
     subject { client.create_beta_app_review_submission build: 'build-id' }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/betaAppReviewSubmissions',
-                                         body: {
-                                           data: { relationships: { build: { data: { id: 'build-id', type: 'builds' } } },
-                                                   type: 'betaAppReviewSubmissions' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/betaAppReviewSubmissions',
+                                       body: {
+                                         data: { relationships: { build: { data: { id: 'build-id', type: 'builds' } } },
+                                                 type: 'betaAppReviewSubmissions' }
+                                       }
   end
 
   describe '#beta_app_review_submission_build' do

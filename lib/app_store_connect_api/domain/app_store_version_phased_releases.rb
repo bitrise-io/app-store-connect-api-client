@@ -5,9 +5,9 @@ module AppStoreConnectApi
     module AppStoreVersionPhasedReleases
       # @see https://developer.apple.com/documentation/appstoreconnectapi/create_an_app_store_version_phased_release
       def create_app_store_version_phased_release(attributes, relationships)
-        create '/v1/appStoreVersionPhasedReleases', data: { attributes: attributes,
-                                                            relationships: Utils::RelationshipMapper.expand(relationships),
-                                                            type: 'appStoreVersionPhasedReleases' }
+        post '/v1/appStoreVersionPhasedReleases', data: { attributes: attributes,
+                                                          relationships: Utils::RelationshipMapper.expand(relationships),
+                                                          type: 'appStoreVersionPhasedReleases' }
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/modify_an_app_store_version_phased_release

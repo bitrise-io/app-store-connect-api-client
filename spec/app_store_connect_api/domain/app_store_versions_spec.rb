@@ -11,12 +11,12 @@ RSpec.describe AppStoreConnectApi::Domain::AppStoreVersions, :api do
   describe '#create_app_store_version' do
     subject { client.create_app_store_version({ version_string: '1.2' }, app: 'app-id') }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appStoreVersions',
-                                         body: {
-                                           data: { attributes: { versionString: '1.2' },
-                                                   relationships: { app: { data: { id: 'app-id', type: 'apps' } } },
-                                                   type: 'appStoreVersions' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appStoreVersions',
+                                       body: {
+                                         data: { attributes: { versionString: '1.2' },
+                                                 relationships: { app: { data: { id: 'app-id', type: 'apps' } } },
+                                                 type: 'appStoreVersions' }
+                                       }
   end
 
   describe '#update_app_store_version' do

@@ -15,9 +15,9 @@ module AppStoreConnectApi
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/create_a_review_submission
       def create_review_submission(attributes, relationships)
-        create '/v1/reviewSubmissions', data: { attributes: attributes,
-                                                relationships: Utils::RelationshipMapper.expand(relationships),
-                                                type: 'reviewSubmissions' }
+        post '/v1/reviewSubmissions', data: { attributes: attributes,
+                                              relationships: Utils::RelationshipMapper.expand(relationships),
+                                              type: 'reviewSubmissions' }
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/modify_a_review_submission

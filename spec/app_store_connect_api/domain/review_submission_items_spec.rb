@@ -4,11 +4,11 @@ RSpec.describe AppStoreConnectApi::Domain::ReviewSubmissionItems, :api do
   describe '#create_review_submission_item' do
     subject { client.create_review_submission_item review_submission: 'review-submission-id' }
 
-    it_behaves_like 'a CREATE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/reviewSubmissionItems',
-                                         body: {
-                                           data: { relationships: { reviewSubmission: { data: { id: 'review-submission-id', type: 'reviewSubmissions' } } },
-                                                   type: 'reviewSubmissionItems' }
-                                         }
+    it_behaves_like 'a POST endpoint', url: 'https://api.appstoreconnect.apple.com/v1/reviewSubmissionItems',
+                                       body: {
+                                         data: { relationships: { reviewSubmission: { data: { id: 'review-submission-id', type: 'reviewSubmissions' } } },
+                                                 type: 'reviewSubmissionItems' }
+                                       }
   end
 
   describe '#update_review_submission_item' do

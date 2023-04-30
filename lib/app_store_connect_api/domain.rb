@@ -24,6 +24,7 @@ require_relative 'domain/prerelease_versions'
 require_relative 'domain/profiles'
 require_relative 'domain/review_submission_items'
 require_relative 'domain/review_submissions'
+require_relative 'domain/users'
 
 module AppStoreConnectApi
   module Domain
@@ -51,5 +52,6 @@ module AppStoreConnectApi
     include Profiles
     include ReviewSubmissionItems
     include ReviewSubmissions
+    include Users
   end
 end

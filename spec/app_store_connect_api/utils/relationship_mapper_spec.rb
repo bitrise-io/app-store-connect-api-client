@@ -22,7 +22,17 @@ RSpec.describe AppStoreConnectApi::Utils::RelationshipMapper do
 
       it { is_expected.to eq app: { data: { id: 'app-id', type: 'apps' } },
                              beta_groups: { data: [{ id: 'beta-group-id1', type: 'betaGroups' },
-                                                   { id: 'beta-group-id2', type: 'betaGroups' }] }}
+                                                   { id: 'beta-group-id2', type: 'betaGroups' }] } }
+    end
+
+    context 'when some relationships have to be translated to a different type' do
+      subject(:expand) { described_class.expand relationships, type_translations }
+
+      let(:relationships) { { individual_tester: 'beta-tester-id', visible_apps: ['app-id'] } }
+      let(:type_translations) { { 'individualTesters' => 'betaTesters', 'visibleApps' => 'apps' } }
+
+      it { is_expected.to eq individual_tester: { data: { id: 'beta-tester-id', type: 'betaTesters' } },
+                             visible_apps: { data: [{ id: 'app-id', type: 'apps' }] } }
     end
   end
 end

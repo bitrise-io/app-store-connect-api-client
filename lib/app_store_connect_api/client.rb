@@ -9,6 +9,7 @@ require_relative 'client/app_store_version_phased_releases'
 require_relative 'client/app_store_version_release_requests'
 require_relative 'client/app_store_versions'
 require_relative 'client/apps'
+require_relative 'client/beta_app_localizations'
 require_relative 'client/beta_app_review_submissions'
 require_relative 'client/beta_build_localizations'
 require_relative 'client/beta_groups'
@@ -27,6 +28,7 @@ module AppStoreConnectApi
     include AppStoreVersionReleaseRequests
     include AppStoreVersions
     include Apps
+    include BetaAppLocalizations
     include BetaAppReviewSubmissions
     include BetaBuildLocalizations
     include BetaGroups

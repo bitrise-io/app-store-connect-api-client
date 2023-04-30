@@ -1,44 +1,14 @@
 # frozen_string_literal: true
 
 require_relative 'authorization'
+require_relative 'domain'
 require_relative 'utils/hash_utils'
 require_relative 'utils/relationship_mapper'
 require_relative 'utils/string_utils'
-require_relative 'client/app_store_version_localizations'
-require_relative 'client/app_store_version_phased_releases'
-require_relative 'client/app_store_version_release_requests'
-require_relative 'client/app_store_versions'
-require_relative 'client/apps'
-require_relative 'client/beta_app_localizations'
-require_relative 'client/beta_app_review_submissions'
-require_relative 'client/beta_build_localizations'
-require_relative 'client/beta_groups'
-require_relative 'client/beta_tester_invitations'
-require_relative 'client/beta_testers'
-require_relative 'client/build_beta_details'
-require_relative 'client/builds'
-require_relative 'client/prerelease_versions'
-require_relative 'client/review_submission_items'
-require_relative 'client/review_submissions'
 
 module AppStoreConnectApi
   class Client
-    include AppStoreVersionLocalizations
-    include AppStoreVersionPhasedReleases
-    include AppStoreVersionReleaseRequests
-    include AppStoreVersions
-    include Apps
-    include BetaAppLocalizations
-    include BetaAppReviewSubmissions
-    include BetaBuildLocalizations
-    include BetaGroups
-    include BetaTesterInvitations
-    include BetaTesters
-    include BuildBetaDetails
-    include Builds
-    include PrereleaseVersions
-    include ReviewSubmissionItems
-    include ReviewSubmissions
+    include Domain
 
     APP_STORE_CONNECT_API_ROOT_URL = 'https://api.appstoreconnect.apple.com'
 

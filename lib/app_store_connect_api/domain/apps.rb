@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AppStoreConnectApi
-  class Client
+  module Domain
     module Apps
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_apps
       def apps(options = {})

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AppStoreConnectApi
-  class Client
+  module Domain
     module AppStoreVersions
       # @see https://developer.apple.com/documentation/appstoreconnectapi/read_app_store_version_information
       def app_store_version(app_store_version_id, options = {})

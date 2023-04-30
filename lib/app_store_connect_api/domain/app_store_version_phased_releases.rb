@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AppStoreConnectApi
-  class Client
+  module Domain
     module AppStoreVersionPhasedReleases
       # @see https://developer.apple.com/documentation/appstoreconnectapi/create_an_app_store_version_phased_release
       def create_app_store_version_phased_release(attributes, relationships)

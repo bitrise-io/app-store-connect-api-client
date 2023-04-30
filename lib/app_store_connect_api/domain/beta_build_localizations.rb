@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AppStoreConnectApi
-  class Client
+  module Domain
     module BetaBuildLocalizations
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_beta_build_localizations
       def beta_build_localizations(options = {})

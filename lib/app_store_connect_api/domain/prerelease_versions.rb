@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AppStoreConnectApi
-  class Client
+  module Domain
     module PrereleaseVersions
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_prerelease_versions
       def prerelease_versions(options = {})

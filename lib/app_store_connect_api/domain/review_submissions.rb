@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AppStoreConnectApi
-  class Client
+  module Domain
     module ReviewSubmissions
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_review_submissions_for_an_app
       def review_submissions(options = {})

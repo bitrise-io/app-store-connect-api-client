@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AppStoreConnectApi
-  class Client
+  module Domain
     module BetaGroups
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_beta_groups
       def beta_groups(options = {})

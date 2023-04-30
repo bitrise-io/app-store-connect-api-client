@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AppStoreConnectApi
-  class Client
+  module Domain
     module Builds
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_builds
       def builds(options = {})

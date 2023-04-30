@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AppStoreConnectApi
-  class Client
+  module Domain
     module BuildBetaDetails
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_build_beta_details
       def build_beta_details(options = {})

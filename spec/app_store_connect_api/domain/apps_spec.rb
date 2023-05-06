@@ -42,6 +42,16 @@ RSpec.describe AppStoreConnectApi::Domain::Apps, :api do
                                       query_params: { limit: 10 }
   end
 
+  describe '#remove_app_beta_testers' do
+    subject { client.remove_app_beta_testers 'app-id', ['beta-tester-id1', 'beta-tester-id2'] }
+
+    it_behaves_like 'a DELETE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/relationships/betaTesters',
+                                         body: {
+                                           data: [{ id: 'beta-tester-id1', type: 'betaTesters' },
+                                                  { id: 'beta-tester-id2', type: 'betaTesters' }]
+                                         }
+  end
+
   describe '#app_builds' do
     subject { client.app_builds 'app-id', limit: 10 }
 
@@ -53,6 +63,13 @@ RSpec.describe AppStoreConnectApi::Domain::Apps, :api do
     subject { client.app_prerelease_versions 'app-id', limit: 10 }
 
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/preReleaseVersions',
+                                      query_params: { limit: 10 }
+  end
+
+  describe '#app_app_clips' do
+    subject { client.app_app_clips 'app-id', limit: 10 }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/appClips',
                                       query_params: { limit: 10 }
   end
 end

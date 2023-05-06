@@ -60,10 +60,45 @@ RSpec.describe AppStoreConnectApi::Domain::AppStoreVersions, :api do
                                         }
   end
 
+  describe '#app_store_version_app_store_version_experiments' do
+    subject { client.app_store_version_app_store_version_experiments 'app-store-version-id', limit: 10 }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appStoreVersions/app-store-version-id/appStoreVersionExperiments',
+                                      query_params: { limit: 10 }
+  end
+
   describe '#app_store_version_app_store_version_localizations' do
     subject { client.app_store_version_app_store_version_localizations 'app-store-version-id', limit: 10 }
 
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appStoreVersions/app-store-version-id/appStoreVersionLocalizations',
+                                      query_params: { limit: 10 }
+  end
+
+  describe '#app_store_version_app_store_version_phased_release' do
+    subject { client.app_store_version_app_store_version_phased_release 'app-store-version-id', fields: { app_store_version_phased_releases: 'startDate' } }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appStoreVersions/app-store-version-id/appStoreVersionPhasedRelease',
+                                      query_params: { fields: { appStoreVersionPhasedReleases: 'startDate' } }
+  end
+
+  describe '#app_store_version_app_store_review_detail' do
+    subject { client.app_store_version_app_store_review_detail 'app-store-version-id', include: 'appStoreVersion' }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appStoreVersions/app-store-version-id/appStoreReviewDetail',
+                                      query_params: { include: 'appStoreVersion' }
+  end
+
+  describe '#app_store_version_routing_app_coverage' do
+    subject { client.app_store_version_routing_app_coverage 'app-store-version-id', fields: { routing_app_coverages: 'uploaded' } }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appStoreVersions/app-store-version-id/routingAppCoverage',
+                                      query_params: { fields: { routingAppCoverages: 'uploaded' } }
+  end
+
+  describe '#app_store_version_customer_reviews' do
+    subject { client.app_store_version_customer_reviews 'app-store-version-id', limit: 10 }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appStoreVersions/app-store-version-id/customerReviews',
                                       query_params: { limit: 10 }
   end
 end

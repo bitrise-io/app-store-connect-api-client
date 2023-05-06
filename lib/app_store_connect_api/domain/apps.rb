@@ -31,6 +31,11 @@ module AppStoreConnectApi
         get "/v1/apps/#{app_id}/betaGroups", options
       end
 
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_specified_beta_testers_from_all_groups_and_builds_of_an_app
+      def remove_app_beta_testers(app_id, beta_tester_ids)
+        delete "/v1/apps/#{app_id}/relationships/betaTesters", data: Utils::RelationshipMapper.resource_keys(beta_tester_ids, 'betaTesters')
+      end
+
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_builds_of_an_app
       def app_builds(app_id, options = {})
         get "/v1/apps/#{app_id}/builds", options
@@ -39,6 +44,11 @@ module AppStoreConnectApi
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_prerelease_versions_for_an_app
       def app_prerelease_versions(app_id, options = {})
         get "/v1/apps/#{app_id}/preReleaseVersions", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_app_clips_for_an_app
+      def app_app_clips(app_id, options = {})
+        get "/v1/apps/#{app_id}/appClips", options
       end
     end
   end

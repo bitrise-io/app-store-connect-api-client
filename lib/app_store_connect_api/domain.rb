@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'domain/app_info_localizations'
 require_relative 'domain/app_store_version_localizations'
 require_relative 'domain/app_store_version_phased_releases'
 require_relative 'domain/app_store_version_release_requests'
@@ -30,6 +31,7 @@ require_relative 'domain/user_invitations'
 
 module AppStoreConnectApi
   module Domain
+    include AppInfoLocalizations
     include AppStoreVersionLocalizations
     include AppStoreVersionPhasedReleases
     include AppStoreVersionReleaseRequests

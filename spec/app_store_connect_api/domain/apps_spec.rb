@@ -28,13 +28,6 @@ RSpec.describe AppStoreConnectApi::Domain::Apps, :api do
                                         }
   end
 
-  describe '#app_app_store_versions' do
-    subject { client.app_app_store_versions 'app-id', limit: 10 }
-
-    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/appStoreVersions',
-                                      query_params: { limit: 10 }
-  end
-
   describe '#app_beta_groups' do
     subject { client.app_beta_groups 'app-id', limit: 10 }
 
@@ -50,6 +43,27 @@ RSpec.describe AppStoreConnectApi::Domain::Apps, :api do
                                            data: [{ id: 'beta-tester-id1', type: 'betaTesters' },
                                                   { id: 'beta-tester-id2', type: 'betaTesters' }]
                                          }
+  end
+
+  describe '#app_beta_app_review_detail' do
+    subject { client.app_beta_app_review_detail 'app-id', fields: { beta_app_review_detail: 'app' } }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/betaAppReviewDetail',
+                                      query_params: { fields: { betaAppReviewDetail: 'app' } }
+  end
+
+  describe '#app_beta_license_agreement' do
+    subject { client.app_beta_license_agreement 'app-id', fields: { beta_license_agreement: 'app' } }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/betaLicenseAgreement',
+                                      query_params: { fields: { betaLicenseAgreement: 'app' } }
+  end
+
+  describe '#app_beta_app_localizations' do
+    subject { client.app_beta_app_localizations 'app-id', limit: 10 }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/betaAppLocalizations',
+                                      query_params: { limit: 10 }
   end
 
   describe '#app_builds' do
@@ -70,6 +84,48 @@ RSpec.describe AppStoreConnectApi::Domain::Apps, :api do
     subject { client.app_app_clips 'app-id', limit: 10 }
 
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/appClips',
+                                      query_params: { limit: 10 }
+  end
+
+  describe '#app_app_price_points' do
+    subject { client.app_app_price_points 'app-id', limit: 10 }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/appPricePoints',
+                                      query_params: { limit: 10 }
+  end
+
+  describe '#app_app_store_versions' do
+    subject { client.app_app_store_versions 'app-id', limit: 10 }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/appStoreVersions',
+                                      query_params: { limit: 10 }
+  end
+
+  describe '#app_app_infos' do
+    subject { client.app_app_infos 'app-id', limit: 10 }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/appInfos',
+                                      query_params: { limit: 10 }
+  end
+
+  describe '#app_pre_order' do
+    subject { client.app_pre_order 'app-id', fields: { app_pre_orders: 'app' } }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/preOrder',
+                                      query_params: { fields: { appPreOrders: 'app' } }
+  end
+
+  describe '#app_end_user_license_agreement' do
+    subject { client.app_end_user_license_agreement 'app-id', fields: { end_user_license_agreements: 'app' } }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/endUserLicenseAgreement',
+                                      query_params: { fields: { endUserLicenseAgreements: 'app' } }
+  end
+
+  describe '#app_app_custom_product_pages' do
+    subject { client.app_app_custom_product_pages 'app-id', limit: 10 }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/appCustomProductPages',
                                       query_params: { limit: 10 }
   end
 end

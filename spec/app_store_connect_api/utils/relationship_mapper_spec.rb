@@ -33,6 +33,13 @@ RSpec.describe AppStoreConnectApi::Utils::RelationshipMapper do
 
       it { is_expected.to eq individual_tester: { data: { id: 'beta-tester-id', type: 'betaTesters' } },
                              visible_apps: { data: [{ id: 'app-id', type: 'apps' }] } }
+
+      context 'when type translations contain a wildcard' do
+        let(:type_translations) { { '*' => 'resources' } }
+
+        it { is_expected.to eq individual_tester: { data: { id: 'beta-tester-id', type: 'resources' } },
+                               visible_apps: { data: [{ id: 'app-id', type: 'resources' }] } }
+      end
     end
   end
 end

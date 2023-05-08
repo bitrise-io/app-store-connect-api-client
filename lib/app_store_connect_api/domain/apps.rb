@@ -21,11 +21,6 @@ module AppStoreConnectApi
                                     included: Utils::RelationshipMapper.resource_keys(app_price_ids, 'appPrices')
       end
 
-      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_app_store_versions_for_an_app
-      def app_app_store_versions(app_id, options = {})
-        get "/v1/apps/#{app_id}/appStoreVersions", options
-      end
-
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_beta_groups_for_an_app
       def app_beta_groups(app_id, options = {})
         get "/v1/apps/#{app_id}/betaGroups", options
@@ -34,6 +29,21 @@ module AppStoreConnectApi
       # @see https://developer.apple.com/documentation/appstoreconnectapi/remove_specified_beta_testers_from_all_groups_and_builds_of_an_app
       def remove_app_beta_testers(app_id, beta_tester_ids)
         delete "/v1/apps/#{app_id}/relationships/betaTesters", data: Utils::RelationshipMapper.resource_keys(beta_tester_ids, 'betaTesters')
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/read_the_beta_app_review_details_resource_of_an_app
+      def app_beta_app_review_detail(app_id, options = {})
+        get "/v1/apps/#{app_id}/betaAppReviewDetail", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/read_the_beta_license_agreement_of_an_app
+      def app_beta_license_agreement(app_id, options = {})
+        get "/v1/apps/#{app_id}/betaLicenseAgreement", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_beta_app_localizations_of_an_app
+      def app_beta_app_localizations(app_id, options = {})
+        get "/v1/apps/#{app_id}/betaAppLocalizations", options
       end
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_builds_of_an_app
@@ -49,6 +59,36 @@ module AppStoreConnectApi
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_app_clips_for_an_app
       def app_app_clips(app_id, options = {})
         get "/v1/apps/#{app_id}/appClips", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_price_points_for_an_app
+      def app_app_price_points(app_id, options = {})
+        get "/v1/apps/#{app_id}/appPricePoints", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_app_store_versions_for_an_app
+      def app_app_store_versions(app_id, options = {})
+        get "/v1/apps/#{app_id}/appStoreVersions", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_app_infos_for_an_app
+      def app_app_infos(app_id, options = {})
+        get "/v1/apps/#{app_id}/appInfos", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/read_the_pre-order_information_of_an_app
+      def app_pre_order(app_id, options = {})
+        get "/v1/apps/#{app_id}/preOrder", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/read_the_end_user_license_agreement_information_of_an_app
+      def app_end_user_license_agreement(app_id, options = {})
+        get "/v1/apps/#{app_id}/endUserLicenseAgreement", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_custom_product_pages_for_an_app
+      def app_app_custom_product_pages(app_id, options = {})
+        get "/v1/apps/#{app_id}/appCustomProductPages", options
       end
     end
   end

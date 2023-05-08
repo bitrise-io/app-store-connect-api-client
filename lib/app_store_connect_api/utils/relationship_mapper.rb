@@ -22,7 +22,7 @@ module AppStoreConnectApi
         private
 
         def resource_key(id, resource_type, type_translations = {})
-          { id: id, type: type_translations[resource_type] || resource_type }
+          { id: id, type: type_translations[resource_type] || type_translations['*'] || resource_type }
         end
 
         def to_resource_type(relationship_type, already_plural:)

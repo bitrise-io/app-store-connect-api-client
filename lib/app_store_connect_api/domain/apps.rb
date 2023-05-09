@@ -90,6 +90,21 @@ module AppStoreConnectApi
       def app_app_custom_product_pages(app_id, options = {})
         get "/v1/apps/#{app_id}/appCustomProductPages", options
       end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_in-app_purchases_for_an_app
+      def app_in_app_purchases(app_id, options = {})
+        get "/v1/apps/#{app_id}/inAppPurchasesV2", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_promoted_purchases_for_an_app
+      def app_promoted_purchases(app_id, options = {})
+        get "/v1/apps/#{app_id}/promotedPurchases", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/get_review_submissions_for_an_app
+      def app_review_submissions(app_id, options = {})
+        get "/v1/apps/#{app_id}/reviewSubmissions", options
+      end
     end
   end
 end

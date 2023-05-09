@@ -128,4 +128,25 @@ RSpec.describe AppStoreConnectApi::Domain::Apps, :api do
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/appCustomProductPages',
                                       query_params: { limit: 10 }
   end
+
+  describe '#app_in_app_purchases' do
+    subject { client.app_in_app_purchases 'app-id', limit: 10 }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/inAppPurchasesV2',
+                                      query_params: { limit: 10 }
+  end
+
+  describe '#app_promoted_purchases' do
+    subject { client.app_promoted_purchases 'app-id', limit: 10 }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/promotedPurchases',
+                                      query_params: { limit: 10 }
+  end
+
+  describe '#app_review_submissions' do
+    subject { client.app_review_submissions 'app-id', limit: 10 }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/reviewSubmissions',
+                                    query_params: { limit: 10 }
+  end
 end

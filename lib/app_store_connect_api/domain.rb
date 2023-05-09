@@ -3,6 +3,7 @@
 require_relative 'domain/app_info_localizations'
 require_relative 'domain/app_infos'
 require_relative 'domain/app_price_points'
+require_relative 'domain/app_price_schedules'
 require_relative 'domain/app_store_version_localizations'
 require_relative 'domain/app_store_version_phased_releases'
 require_relative 'domain/app_store_version_release_requests'
@@ -36,6 +37,7 @@ module AppStoreConnectApi
     include AppInfoLocalizations
     include AppInfos
     include AppPricePoints
+    include AppPriceSchedules
     include AppStoreVersionLocalizations
     include AppStoreVersionPhasedReleases
     include AppStoreVersionReleaseRequests

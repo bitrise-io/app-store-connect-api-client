@@ -149,4 +149,18 @@ RSpec.describe AppStoreConnectApi::Domain::Apps, :api do
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/reviewSubmissions',
                                       query_params: { limit: 10 }
   end
+
+  describe '#app_customer_reviews' do
+    subject { client.app_customer_reviews 'app-id', limit: 10 }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/customerReviews',
+                                      query_params: { limit: 10 }
+  end
+
+  describe '#app_app_price_schedule' do
+    subject { client.app_app_price_schedule 'app-id', include: 'app' }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/appPriceSchedule',
+                                      query_params: { include: 'app' }
+  end
 end

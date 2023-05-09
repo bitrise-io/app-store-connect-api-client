@@ -105,6 +105,16 @@ module AppStoreConnectApi
       def app_review_submissions(app_id, options = {})
         get "/v1/apps/#{app_id}/reviewSubmissions", options
       end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_customer_reviews_for_an_app
+      def app_customer_reviews(app_id, options = {})
+        get "/v1/apps/#{app_id}/customerReviews", options
+      end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/read_price_schedule_information_for_an_app
+      def app_app_price_schedule(app_id, options = {})
+        get "/v1/apps/#{app_id}/appPriceSchedule", options
+      end
     end
   end
 end

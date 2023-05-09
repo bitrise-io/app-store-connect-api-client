@@ -8,7 +8,7 @@ module AppStoreConnectApi
         post '/v1/betaTesterInvitations', data: { relationships: Utils::RelationshipMapper.expand(relationships),
                                                   type: 'betaTesterInvitations' }
       end
-      alias :invite_beta_tester :create_beta_tester_invitation
+      alias invite_beta_tester create_beta_tester_invitation
     end
   end
 end

@@ -147,6 +147,6 @@ RSpec.describe AppStoreConnectApi::Domain::Apps, :api do
     subject { client.app_review_submissions 'app-id', limit: 10 }
 
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/reviewSubmissions',
-                                    query_params: { limit: 10 }
+                                      query_params: { limit: 10 }
   end
 end

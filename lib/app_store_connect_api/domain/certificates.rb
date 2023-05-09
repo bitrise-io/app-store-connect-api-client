@@ -23,7 +23,7 @@ module AppStoreConnectApi
       def delete_certificate(certificate_id)
         delete "/v1/certificates/#{certificate_id}"
       end
-      alias :revoke_certificate :delete_certificate
+      alias revoke_certificate delete_certificate
     end
   end
 end

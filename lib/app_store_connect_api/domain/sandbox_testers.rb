@@ -18,7 +18,7 @@ module AppStoreConnectApi
       # @see https://developer.apple.com/documentation/appstoreconnectapi/clear_purchase_history_for_a_sandbox_tester
       def clear_sandbox_tester_purchase_history(sandbox_tester_ids)
         post '/v2/sandboxTestersClearPurchaseHistoryRequest', data: { relationships: Utils::RelationshipMapper.expand(sandbox_testers: sandbox_tester_ids),
-                                                                      type: 'sandboxTestersClearPurchaseHistoryRequest'}
+                                                                      type: 'sandboxTestersClearPurchaseHistoryRequest' }
       end
     end
   end

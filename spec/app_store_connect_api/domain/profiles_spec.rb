@@ -37,20 +37,20 @@ RSpec.describe AppStoreConnectApi::Domain::Profiles, :api do
     subject { client.profile_bundle_id 'profile-id', fields: { bundle_ids: 'name' } }
 
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/profiles/profile-id/bundleId',
-                    query_params: { fields: { bundleIds: 'name' } }
+                                      query_params: { fields: { bundleIds: 'name' } }
   end
 
   describe '#profile_certificates' do
     subject { client.profile_certificates 'profile-id', limit: 10 }
 
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/profiles/profile-id/certificates',
-                    query_params: { limit: 10 }
+                                      query_params: { limit: 10 }
   end
 
   describe '#profile_devices' do
     subject { client.profile_devices 'profile-id', limit: 10 }
 
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/profiles/profile-id/devices',
-                    query_params: { limit: 10 }
+                                      query_params: { limit: 10 }
   end
 end

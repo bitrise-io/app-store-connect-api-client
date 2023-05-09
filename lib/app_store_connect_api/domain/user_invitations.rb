@@ -19,13 +19,13 @@ module AppStoreConnectApi
                                             relationships: Utils::RelationshipMapper.expand(relationships, 'visibleApps' => 'apps'),
                                             type: 'user_invitations' }
       end
-      alias :invite_user :create_user_invitation
+      alias invite_user create_user_invitation
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/cancel_a_user_invitation
       def delete_user_invitation(user_invitation_id)
         delete "/v1/userInvitations/#{user_invitation_id}"
       end
-      alias :cancel_user_invitation :delete_user_invitation
+      alias cancel_user_invitation delete_user_invitation
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_apps_visible_to_an_invited_user
       def user_invitation_visible_apps(user_invitation_id, options = {})

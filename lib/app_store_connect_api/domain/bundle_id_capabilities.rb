@@ -9,7 +9,7 @@ module AppStoreConnectApi
                                                  relationships: Utils::RelationshipMapper.expand(relationships),
                                                  type: 'bundleIdCapabilities' }
       end
-      alias :enable_bundle_id_capability :create_bundle_id_capability
+      alias enable_bundle_id_capability create_bundle_id_capability
 
       # @see https://developer.apple.com/documentation/appstoreconnectapi/modify_a_capability_configuration
       def update_bundle_id_capability(bundle_id_capability_id, attributes)
@@ -22,7 +22,7 @@ module AppStoreConnectApi
       def delete_bundle_id_capability(bundle_id_capability_id)
         delete "/v1/bundleIdCapabilities/#{bundle_id_capability_id}"
       end
-      alias :disable_bundle_id_capability :delete_bundle_id_capability
+      alias disable_bundle_id_capability delete_bundle_id_capability
     end
   end
 end

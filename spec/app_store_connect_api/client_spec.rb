@@ -244,7 +244,7 @@ RSpec.describe AppStoreConnectApi::Client do
       let(:api_response_body) { { reviewSubmission: { data: { id: 'some-id' } } } }
 
       it 'transforms camelCase keys into snake_case' do
-        expect(client.delete '/test/endpoint').to eq review_submission: { data: { id: 'some-id' } }
+        expect(client.delete('/test/endpoint')).to eq review_submission: { data: { id: 'some-id' } }
       end
     end
 

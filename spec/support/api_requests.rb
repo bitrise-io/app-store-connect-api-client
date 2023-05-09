@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_context 'API requests' do # rubocop:disable RSpec/ContextWording
+RSpec.shared_context 'API requests' do
   let(:client) { AppStoreConnectApi::Client.new 'issuer-id', 'key-id', 'private-key' }
   let(:authorization) { instance_double AppStoreConnectApi::Authorization, token: 'bearer-token' }
 

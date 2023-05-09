@@ -66,13 +66,13 @@ RSpec.describe AppStoreConnectApi::Domain::AppInfos, :api do
     subject { client.app_info_secondary_subcategory_one 'app-info-id', include: 'parent' }
 
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appInfos/app-info-id/secondarySubcategoryOne',
-                    query_params: { include: 'parent' }
+                                      query_params: { include: 'parent' }
   end
 
   describe '#app_info_secondary_subcategory_two' do
     subject { client.app_info_secondary_subcategory_two 'app-info-id', include: 'parent' }
 
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/appInfos/app-info-id/secondarySubcategoryTwo',
-                    query_params: { include: 'parent' }
+                                      query_params: { include: 'parent' }
   end
 end

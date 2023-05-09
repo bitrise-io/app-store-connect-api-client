@@ -13,11 +13,11 @@ RSpec.describe AppStoreConnectApi::Domain::BundleIdCapabilities, :api do
   end
 
   describe '#update_bundle_id_capability' do
-    subject { client.update_bundle_id_capability 'bundle-id-capability-id', capability_type: 'ICLOUD', settings: [{visible: true}] }
+    subject { client.update_bundle_id_capability 'bundle-id-capability-id', capability_type: 'ICLOUD', settings: [{ visible: true }] }
 
     it_behaves_like 'a PATCH endpoint', url: 'https://api.appstoreconnect.apple.com/v1/bundleIdCapabilities/bundle-id-capability-id',
                                         body: {
-                                          data: { attributes: { capabilityType: 'ICLOUD', settings: [{visible: true}] },
+                                          data: { attributes: { capabilityType: 'ICLOUD', settings: [{ visible: true }] },
                                                   id: 'bundle-id-capability-id',
                                                   type: 'bundleIdCapabilities' }
                                         }

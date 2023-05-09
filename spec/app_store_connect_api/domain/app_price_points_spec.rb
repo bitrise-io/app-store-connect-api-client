@@ -12,6 +12,6 @@ RSpec.describe AppStoreConnectApi::Domain::AppPricePoints, :api do
     subject { client.app_price_point_equalizations 'app-price-point-id', limit: 10 }
 
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v3/appPricePoints/app-price-point-id/equalizations',
-                    query_params: { limit: 10 }
+                                      query_params: { limit: 10 }
   end
 end

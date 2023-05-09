@@ -135,4 +135,11 @@ RSpec.describe AppStoreConnectApi::Domain::Builds, :api do
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/builds/build-id/preReleaseVersion',
                                       query_params: { fields: { preReleaseVersions: 'version' } }
   end
+
+  describe '#build_icons' do
+    subject { client.build_icons 'build-id', limit: 10 }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/builds/build-id/icons',
+                                      query_params: { limit: 10 }
+  end
 end

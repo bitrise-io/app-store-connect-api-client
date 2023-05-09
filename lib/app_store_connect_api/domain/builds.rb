@@ -95,6 +95,11 @@ module AppStoreConnectApi
       def build_prerelease_version(build_id, options = {})
         get "/v1/builds/#{build_id}/preReleaseVersion", options
       end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_all_icons_for_a_build
+      def build_icons(build_id, options = {})
+        get "/v1/builds/#{build_id}/icons", options
+      end
     end
   end
 end

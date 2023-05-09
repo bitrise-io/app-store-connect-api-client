@@ -1,5 +1,8 @@
+require: rubocop-rspec
+
 AllCops:
   NewCops: enable
+  SuggestExtensions: false
   TargetRubyVersion: 2.7
 
 Layout/LineLength:
@@ -19,3 +22,18 @@ Naming/RescuedExceptionsVariableName:
 
 Metrics/BlockLength:
   Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
+RSpec/ContextWording:
+  Enabled: false
+RSpec/ExampleLength:
+  Enabled: false
+RSpec/ImplicitSubject:
+  EnforcedStyle: single_statement_only
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+RSpec/NestedGroups:
+  Max: 5

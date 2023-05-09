@@ -9,7 +9,7 @@ RSpec.describe AppStoreConnectApi::Client do
     allow(AppStoreConnectApi::Authorization).to receive(:new).with('issuer-id', 'key-id', 'private-key').and_return authorization
   end
 
-  shared_examples :it_raises_an_error_if_the_request_failed do
+  shared_examples 'it raises an error if the request failed' do
     context 'when the request fails without reaching the API' do
       let(:network_error) { Faraday::ConnectionFailed.new 'Network error' }
 
@@ -135,7 +135,7 @@ RSpec.describe AppStoreConnectApi::Client do
       end
     end
 
-    include_examples :it_raises_an_error_if_the_request_failed
+    include_examples 'it raises an error if the request failed'
   end
 
   describe '#post' do
@@ -177,7 +177,7 @@ RSpec.describe AppStoreConnectApi::Client do
       end
     end
 
-    include_examples :it_raises_an_error_if_the_request_failed
+    include_examples 'it raises an error if the request failed'
   end
 
   describe '#patch' do
@@ -219,7 +219,7 @@ RSpec.describe AppStoreConnectApi::Client do
       end
     end
 
-    include_examples :it_raises_an_error_if_the_request_failed
+    include_examples 'it raises an error if the request failed'
   end
 
   describe '#delete' do
@@ -269,6 +269,6 @@ RSpec.describe AppStoreConnectApi::Client do
       end
     end
 
-    include_examples :it_raises_an_error_if_the_request_failed
+    include_examples 'it raises an error if the request failed'
   end
 end

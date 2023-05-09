@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+require_relative 'domain/age_rating_declarations'
 require_relative 'domain/app_availabilities'
+require_relative 'domain/app_categories'
 require_relative 'domain/app_info_localizations'
 require_relative 'domain/app_infos'
 require_relative 'domain/app_price_points'
@@ -36,7 +38,9 @@ require_relative 'domain/user_invitations'
 
 module AppStoreConnectApi
   module Domain
+    include AgeRatingDeclarations
     include AppAvailabilities
+    include AppCategories
     include AppInfoLocalizations
     include AppInfos
     include AppPricePoints

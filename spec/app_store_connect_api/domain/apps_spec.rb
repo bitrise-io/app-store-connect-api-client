@@ -163,4 +163,11 @@ RSpec.describe AppStoreConnectApi::Domain::Apps, :api do
     it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/appPriceSchedule',
                                       query_params: { include: 'app' }
   end
+
+  describe '#app_app_availability' do
+    subject { client.app_app_availability 'app-id', include: 'app' }
+
+    it_behaves_like 'a GET endpoint', url: 'https://api.appstoreconnect.apple.com/v1/apps/app-id/appAvailability',
+                                      query_params: { include: 'app' }
+  end
 end

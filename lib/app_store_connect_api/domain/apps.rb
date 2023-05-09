@@ -115,6 +115,11 @@ module AppStoreConnectApi
       def app_app_price_schedule(app_id, options = {})
         get "/v1/apps/#{app_id}/appPriceSchedule", options
       end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/list_availability_for_an_app
+      def app_app_availability(app_id, options = {})
+        get "/v1/apps/#{app_id}/appAvailability", options
+      end
     end
   end
 end

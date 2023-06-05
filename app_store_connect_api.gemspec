@@ -3,7 +3,7 @@
 require_relative "lib/app_store_connect_api/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "app_store_connect_api"
+  spec.name = "app_store_connect_api_client"
   spec.version = AppStoreConnectApi::VERSION
   spec.authors = ["Zoltan Ormandi"]
   spec.email = ["zoltan.ormandi@gmail.com"]

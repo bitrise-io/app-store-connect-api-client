@@ -36,7 +36,7 @@ client.apps filter: { bundle_id: 'company.org' }, limit: 5
 
 # Including other resources
 client.app_app_store_versions '1539394316', 
-                              filter: {platform: 'IOS', version_string: '2.2'}, 
+                              filter: { platform: 'IOS', version_string: '2.2' }, 
                               include: 'appStoreVersionPhasedRelease,appStoreVersionLocalizations'
 
 # Pagination
@@ -61,10 +61,10 @@ client.create_app_store_version(app_store_version_attributes, app: { data: { id:
 client.create_review_submission_item review_submission: '<review-submission-id>', app_store_version: '<app-store-version-id>'
 
 # Updating attributes
-client.update_app_store_version'<app-store-version-id>', version_string: '1.3'
+client.update_app_store_version '<app-store-version-id>', version_string: '1.3'
 
 # Updating attributes and relationships at the same time
-client.update_app_store_version'<app-store-version-id>', { version_string: '1.3' }, build: '<build-id>'
+client.update_app_store_version '<app-store-version-id>', { version_string: '1.3' }, build: '<build-id>'
 
 # Deleting a resource
 client.delete_app_store_version '<app-store-version-id>'

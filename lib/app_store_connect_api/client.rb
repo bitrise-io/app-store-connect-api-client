@@ -32,7 +32,19 @@ module AppStoreConnectApi
       call_api :delete, path, {}, body
     end
 
+    def more?(resource)
+      not link_to_next_page_in(resource).nil?
+    end
+
+    def next(resource)
+      call_api :get, link_to_next_page_in(resource).sub(APP_STORE_CONNECT_API_ROOT_URL, '')
+    end
+
     private
+
+    def link_to_next_page_in(response)
+      response.dig(:links, :next)
+    end
 
     def call_api(method, path, params = {}, payload = {})
       response = connection.send(method, path) do |req|

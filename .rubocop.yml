@@ -16,6 +16,8 @@ Style/StringLiterals:
   Enabled: false
 Style/WordArray:
   Enabled: false
+Style/Not:
+  Enabled: false
 
 Naming/RescuedExceptionsVariableName:
   Enabled: false

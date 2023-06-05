@@ -18,7 +18,7 @@ RSpec.describe AppStoreConnectApi::Client do
       end
 
       it 'raises an error' do
-        expect { perform_request }.to raise_error AppStoreConnectApi::Error do |error|
+        expect { subject }.to raise_error AppStoreConnectApi::Error do |error|
           expect(error).to have_attributes message: 'Network error',
                                            cause: network_error
         end
@@ -27,12 +27,12 @@ RSpec.describe AppStoreConnectApi::Client do
 
     context 'when the request fails and the response has no details' do
       before do
-        stub_request(:any, 'https://api.appstoreconnect.apple.com/test/endpoint')
+        stub_request(:any, /api\.appstoreconnect\.apple\.com/)
           .to_return(status: 500, body: 'Internal server error')
       end
 
       it 'raises an error' do
-        expect { perform_request }.to raise_error AppStoreConnectApi::Error do |error|
+        expect { subject }.to raise_error AppStoreConnectApi::Error do |error|
           expect(error).to have_attributes message: 'Internal server error'
         end
       end
@@ -54,7 +54,7 @@ RSpec.describe AppStoreConnectApi::Client do
       end
 
       it 'raises an error' do
-        expect { perform_request }.to raise_error AppStoreConnectApi::ApiError do |error|
+        expect { subject }.to raise_error AppStoreConnectApi::ApiError do |error|
           expect(error).to have_attributes status: 401,
                                            code: 'NOT_AUTHORIZED',
                                            message: 'App Store Connect API request failed',
@@ -87,7 +87,7 @@ RSpec.describe AppStoreConnectApi::Client do
       end
 
       it 'raises an error based on the first error in the response' do
-        expect { perform_request }.to raise_error AppStoreConnectApi::ApiError do |error|
+        expect { subject }.to raise_error AppStoreConnectApi::ApiError do |error|
           expect(error).to have_attributes status: 409,
                                            code: 'STATE_ERROR 1',
                                            message: 'App Store Connect API request failed',
@@ -223,7 +223,7 @@ RSpec.describe AppStoreConnectApi::Client do
   end
 
   describe '#delete' do
-    let(:perform_request) { client.delete '/test/endpoint' }
+    subject(:perform_request) { client.delete '/test/endpoint' }
 
     let(:api_response_status) { 200 }
     let(:api_response_body) { { data: 'response' } }
@@ -267,6 +267,42 @@ RSpec.describe AppStoreConnectApi::Client do
       it 'executes the DELETE request including the body' do
         expect(perform_request).to eq data: 'response'
       end
+    end
+
+    include_examples 'it raises an error if the request failed'
+  end
+
+  describe '#more?' do
+    subject { client.more? resource }
+
+    let(:resource) { { links: { next: 'https://api.appstoreconnect.apple.com/link-to-next-page' } } }
+
+    it { is_expected.to be true }
+
+    context 'when there is no "next" link in the resource' do
+      let(:resource) { { links: {} } }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#next' do
+    subject(:next_page) { client.next resource }
+
+    let(:resource) { { links: { next: 'https://api.appstoreconnect.apple.com/link-to-next-page?page=2' } } }
+    let(:api_response_status) { 200 }
+    let(:api_response_body) { { data: 'response' } }
+
+    before do
+      stub_request(:get, 'https://api.appstoreconnect.apple.com/link-to-next-page?page=2')
+        .with(headers: { authorization: 'Bearer bearer-token' })
+        .to_return(status: api_response_status,
+                   body: JSON.dump(api_response_body),
+                   headers: { content_type: 'application/json' })
+    end
+
+    it 'fetches the next page of results based on the "next" link in the resource' do
+      expect(next_page).to eq data: 'response'
     end
 
     include_examples 'it raises an error if the request failed'

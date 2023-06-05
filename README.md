@@ -10,7 +10,7 @@ It does not cover the complete domain of the App Store Connect API (yet), but
 - it is robust and thoroughly tested,
 - it's easy to understand and extend as it contains no metaprogramming (which also means you can have auto-completion with an IDE).
 
-The list of supported domains can be found in the project's [domain folder](https://github.com/zormandi/app_store_connect_api.rb/blob/master/lib/app_store_connect_api/domain).
+The list of supported domains can be found in the project's [domain folder](https://github.com/zormandi/app_store_connect_api.rb/blob/main/lib/app_store_connect_api/domain).
 
 ## Installation
 
@@ -83,7 +83,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/zormandi/app_store_connect_api.rb. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/zormandi/app_store_connect_api.rb/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/zormandi/app_store_connect_api.rb. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/zormandi/app_store_connect_api.rb/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -91,4 +91,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in this project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/zormandi/app_store_connect_api.rb/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in this project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/zormandi/app_store_connect_api.rb/blob/main/CODE_OF_CONDUCT.md).

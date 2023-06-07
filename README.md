@@ -17,7 +17,7 @@ The list of supported domains can be found in the project's [domain folder](http
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'app_store_connect_api_client'
+gem 'app_store_connect_api'
 ```
 
 and run:

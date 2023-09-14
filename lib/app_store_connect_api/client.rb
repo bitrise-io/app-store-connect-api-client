@@ -51,20 +51,9 @@ module AppStoreConnectApi
         req.params = camel_case(params) unless params.empty?
         req.body = camel_case(payload) unless payload.empty?
       end
-      result = snake_case response.body
-      process_response response, result
+      snake_case response.body
     rescue Faraday::Error => error
       raise Error, error
-    end
-
-    def process_response(response, result)
-      if response.success?
-        result
-      elsif result.respond_to? :fetch
-        raise ApiError, result.fetch(:errors, [])
-      else
-        raise Error, result
-      end
     end
 
     def camel_case(params)

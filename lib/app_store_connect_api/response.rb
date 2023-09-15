@@ -12,6 +12,7 @@ module AppStoreConnectApi
     end
 
     def response
+      return if @raw_response.empty?
       raise Error, @raw_response unless @raw_response.is_a? Hash
 
       if @raw_response.key? :errors

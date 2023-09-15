@@ -16,7 +16,7 @@ RSpec.shared_context 'API requests' do
         .to_return(status: 200,
                    body: JSON.dump('data' => 'response'),
                    headers: { content_type: 'application/json' })
-      expect(subject).to eq data: 'response'
+      expect(subject).to eq 'response'
     end
   end
 
@@ -29,7 +29,7 @@ RSpec.shared_context 'API requests' do
         .to_return(status: 200,
                    body: JSON.dump('data' => 'response'),
                    headers: { content_type: 'application/json' })
-      expect(subject).to eq data: 'response'
+      expect(subject).to eq 'response'
     end
   end
 
@@ -42,7 +42,7 @@ RSpec.shared_context 'API requests' do
         .to_return(status: 200,
                    body: JSON.dump('data' => 'response'),
                    headers: { content_type: 'application/json' })
-      expect(subject).to eq data: 'response'
+      expect(subject).to eq 'response'
     end
   end
 

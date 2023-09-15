@@ -2,6 +2,7 @@
 
 require_relative 'authorization'
 require_relative 'domain'
+require_relative 'response'
 require_relative 'utils/hash_utils'
 require_relative 'utils/relationship_mapper'
 require_relative 'utils/string_utils'
@@ -51,31 +52,21 @@ module AppStoreConnectApi
         req.params = camel_case(params) unless params.empty?
         req.body = camel_case(payload) unless payload.empty?
       end
-      result = snake_case response.body
-      process_response response, result
+
+      Response.new(snake_case(response.body), snake_case(params['include'])).response
     rescue Faraday::Error => error
       raise Error, error
-    end
-
-    def process_response(response, result)
-      if response.success?
-        result
-      elsif result.respond_to? :fetch
-        raise ApiError, result.fetch(:errors, [])
-      else
-        raise Error, result
-      end
     end
 
     def camel_case(params)
       Utils::HashUtils.deep_transform_keys(params) { |key| Utils::StringUtils.camelize key.to_s }
     end
 
-    def snake_case(response)
-      if response.is_a? Hash
-        Utils::HashUtils.deep_transform_keys(response) { |key| Utils::StringUtils.underscore(key).to_sym }
+    def snake_case(data)
+      if data.is_a? Hash
+        Utils::HashUtils.deep_transform_keys(data) { |key| Utils::StringUtils.underscore(key).to_sym }
       else
-        response
+        data
       end
     end
 

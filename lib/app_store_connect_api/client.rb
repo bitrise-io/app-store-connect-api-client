@@ -13,7 +13,7 @@ module AppStoreConnectApi
 
     APP_STORE_CONNECT_API_ROOT_URL = 'https://api.appstoreconnect.apple.com'
 
-    def initialize(issuer_id, key_id, private_key, request_timeout = 3)
+    def initialize(issuer_id, key_id, private_key, request_timeout = 30)
       @authorization = Authorization.new issuer_id, key_id, private_key
       @request_timeout = request_timeout
     end

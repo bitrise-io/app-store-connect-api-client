@@ -13,8 +13,9 @@ module AppStoreConnectApi
 
     APP_STORE_CONNECT_API_ROOT_URL = 'https://api.appstoreconnect.apple.com'
 
-    def initialize(issuer_id, key_id, private_key)
+    def initialize(issuer_id, key_id, private_key, request_timeout = 3)
       @authorization = Authorization.new issuer_id, key_id, private_key
+      @request_timeout = request_timeout
     end
 
     def get(path, options = {})
@@ -72,7 +73,7 @@ module AppStoreConnectApi
 
     def connection
       @connection ||= Faraday.new(url: APP_STORE_CONNECT_API_ROOT_URL,
-                                  request: { timeout: 3 },
+                                  request: { timeout: @request_timeout },
                                   headers: { 'Authorization' => "Bearer #{@authorization.token}" }) do |f|
         f.request :json
         f.response :json, content_type: /\bjson$/

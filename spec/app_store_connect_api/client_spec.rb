@@ -114,7 +114,7 @@ RSpec.describe AppStoreConnectApi::Client do
     end
 
     it 'executes a GET request on the App Store Connect API and returns the response body with symbolized keys' do
-      expect(perform_request).to eq data: 'response'
+      expect(perform_request).to eq 'response'
     end
 
     context 'when there are query parameters' do
@@ -123,15 +123,15 @@ RSpec.describe AppStoreConnectApi::Client do
       let(:query_params) { { reviewSubmission: { data: 'id' } } }
 
       it 'passes in the query parameters, transformed into camelCase format' do
-        expect(perform_request).to eq data: 'response'
+        expect(perform_request).to eq 'response'
       end
     end
 
     context 'when the response contains camelCase fields' do
-      let(:api_response_body) { { reviewSubmission: { data: { id: 'some-id' } } } }
+      let(:api_response_body) { { data: { id: 'some-review-id', attributes: { reviewSubmission: 'valid' } } } }
 
       it 'transforms camelCase keys into snake_case' do
-        expect(perform_request).to eq review_submission: { data: { id: 'some-id' } }
+        expect(perform_request).to eq({ id: 'some-review-id', review_submission: 'valid' })
       end
     end
 
@@ -157,7 +157,7 @@ RSpec.describe AppStoreConnectApi::Client do
     end
 
     it 'executes a CREATE request on the App Store Connect API and returns the response body with symbolized keys' do
-      expect(perform_request).to eq data: 'response'
+      expect(perform_request).to eq 'response'
     end
 
     context 'when the body contains snake case attributes' do
@@ -165,15 +165,15 @@ RSpec.describe AppStoreConnectApi::Client do
       let(:body) { { whatsNew: 'value' } }
 
       it 'transforms the attributes into camelCase format' do
-        expect(perform_request).to eq data: 'response'
+        expect(perform_request).to eq 'response'
       end
     end
 
     context 'when the response contains camelCase fields' do
-      let(:api_response_body) { { reviewSubmission: { data: { id: 'some-id' } } } }
+      let(:api_response_body) { { data: { id: 'some-review-id', attributes: { reviewSubmission: 'valid' } } } }
 
       it 'transforms camelCase keys into snake_case' do
-        expect(perform_request).to eq review_submission: { data: { id: 'some-id' } }
+        expect(perform_request).to eq({ id: 'some-review-id', review_submission: 'valid' })
       end
     end
 
@@ -199,7 +199,7 @@ RSpec.describe AppStoreConnectApi::Client do
     end
 
     it 'executes a PATCH request on the App Store Connect API and returns the response body with symbolized keys' do
-      expect(perform_request).to eq data: 'response'
+      expect(perform_request).to eq 'response'
     end
 
     context 'when the body contains snake case attributes' do
@@ -207,15 +207,15 @@ RSpec.describe AppStoreConnectApi::Client do
       let(:body) { { whatsNew: 'value' } }
 
       it 'transforms the attributes into camelCase format' do
-        expect(perform_request).to eq data: 'response'
+        expect(perform_request).to eq 'response'
       end
     end
 
     context 'when the response contains camelCase fields' do
-      let(:api_response_body) { { reviewSubmission: { data: { id: 'some-id' } } } }
+      let(:api_response_body) { { data: { id: 'some-review-id', attributes: { reviewSubmission: 'valid' } } } }
 
       it 'transforms camelCase keys into snake_case' do
-        expect(perform_request).to eq review_submission: { data: { id: 'some-id' } }
+        expect(perform_request).to eq({ id: 'some-review-id', review_submission: 'valid' })
       end
     end
 
@@ -237,14 +237,14 @@ RSpec.describe AppStoreConnectApi::Client do
     end
 
     it 'executes a DELETE request on the App Store Connect API and returns the response body with symbolized keys' do
-      expect(perform_request).to eq data: 'response'
+      expect(perform_request).to eq 'response'
     end
 
     context 'when the response contains camelCase fields' do
-      let(:api_response_body) { { reviewSubmission: { data: { id: 'some-id' } } } }
+      let(:api_response_body) { { data: { id: 'some-review-id', attributes: { reviewSubmission: 'valid' } } } }
 
       it 'transforms camelCase keys into snake_case' do
-        expect(client.delete('/test/endpoint')).to eq review_submission: { data: { id: 'some-id' } }
+        expect(client.delete('/test/endpoint')).to eq({ id: 'some-review-id', review_submission: 'valid' })
       end
     end
 
@@ -265,7 +265,7 @@ RSpec.describe AppStoreConnectApi::Client do
       end
 
       it 'executes the DELETE request including the body' do
-        expect(perform_request).to eq data: 'response'
+        expect(perform_request).to eq 'response'
       end
     end
 
@@ -302,7 +302,7 @@ RSpec.describe AppStoreConnectApi::Client do
     end
 
     it 'fetches the next page of results based on the "next" link in the resource' do
-      expect(next_page).to eq data: 'response'
+      expect(next_page).to eq 'response'
     end
 
     include_examples 'it raises an error if the request failed'

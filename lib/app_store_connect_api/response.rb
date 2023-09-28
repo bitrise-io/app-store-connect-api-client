@@ -4,8 +4,9 @@ require_relative 'api_error'
 
 module AppStoreConnectApi
   class Response
-    def initialize(raw_response, relationships = nil)
-      relationships = [] if relationships.nil?
+    def initialize(raw_response, relationships = '')
+      relationships = '' if relationships.nil?
+      relationships = relationships.split(",")
 
       @raw_response = raw_response
       @relationships = Array(relationships)

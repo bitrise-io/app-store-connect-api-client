@@ -9,7 +9,7 @@ module AppStoreConnectApi
       relationships = relationships.split(",")
 
       @raw_response = raw_response
-      @relationships = Array(relationships)
+      @relationships = relationships
     end
 
     def response
@@ -40,9 +40,8 @@ module AppStoreConnectApi
       result = { id: item[:id] }
       result.merge! item[:attributes] unless item[:attributes].nil?
       relationships.each do |relationship|
-        result = process_relationship item, relationship, result
+        process_relationship item, relationship, result
       end
-      result
     end
 
     def process_relationship(item, relationship, data_item)

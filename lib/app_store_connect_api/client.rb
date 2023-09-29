@@ -54,6 +54,7 @@ module AppStoreConnectApi
         req.body = camel_case(payload) unless payload.empty?
       end
 
+      raise Error, response.body
       Response.new(snake_case(response.body), params[:include]).response
     rescue Faraday::Error => error
       raise Error, error

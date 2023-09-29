@@ -8,7 +8,7 @@ module AppStoreConnectApi
       relationships = '' if relationships.nil?
       relationships = relationships.split(",")
 
-      Raise Error, relationships
+      raise Error, relationships
 
       @raw_response = raw_response
       @relationships = Array(relationships)

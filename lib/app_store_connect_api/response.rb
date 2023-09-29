@@ -8,8 +8,8 @@ module AppStoreConnectApi
       relationships = '' if relationships.nil?
       relationships = relationships.split(",")
 
-      @raw_response = raw_response
-      @relationships = relationships
+      @raw_response = snake_case(raw_response)
+      @relationships = snake_case(relationships)
     end
 
     def response
@@ -24,6 +24,14 @@ module AppStoreConnectApi
     end
 
     private
+
+    def snake_case(data)
+      if data.is_a?(Hash) || data.is_a?(Array)
+        Utils::HashUtils.deep_transform_keys(data) { |key| Utils::StringUtils.underscore(key).to_sym }
+      else
+        data
+      end
+    end
 
     def process_data_from_response
       case @raw_response[:data]

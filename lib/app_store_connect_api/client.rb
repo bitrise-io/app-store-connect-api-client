@@ -54,21 +54,13 @@ module AppStoreConnectApi
         req.body = camel_case(payload) unless payload.empty?
       end
 
-      Response.new(snake_case(response.body), snake_case(params[:include])).response
+      Response.new(response.body, params[:include]).response
     rescue Faraday::Error => error
       raise Error, error
     end
 
     def camel_case(params)
       Utils::HashUtils.deep_transform_keys(params) { |key| Utils::StringUtils.camelize key.to_s }
-    end
-
-    def snake_case(data)
-      if data.is_a? Hash
-        Utils::HashUtils.deep_transform_keys(data) { |key| Utils::StringUtils.underscore(key).to_sym }
-      else
-        data
-      end
     end
 
     def connection

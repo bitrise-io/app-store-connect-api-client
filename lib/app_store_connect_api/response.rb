@@ -26,8 +26,16 @@ module AppStoreConnectApi
     private
 
     def snake_case(data)
-      if data.is_a?(Hash) || data.is_a?(Array)
+      if data.is_a? Hash
         Utils::HashUtils.deep_transform_keys(data) { |key| Utils::StringUtils.underscore(key).to_sym }
+      else if data.is_a? Array
+        data.map do |item|
+          if item.is_a? Hash
+            Utils::HashUtils.deep_transform_keys(data) { |key| Utils::StringUtils.underscore(key).to_sym }
+          end
+
+          Utils::StringUtils.underscore(item).to_sym
+        end
       else
         data
       end

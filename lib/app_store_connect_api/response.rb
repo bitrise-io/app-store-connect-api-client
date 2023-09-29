@@ -45,6 +45,7 @@ module AppStoreConnectApi
     end
 
     def process_relationship(item, relationship, data_item)
+      raise Error, item[:relationships], relationship
       related_item = item[:relationships][relationship]
       data_item[:"#{relationship}_total"] = related_item[:meta][:paging][:total] if related_item.dig :meta, :paging
       data_item[relationship] = process_relationship_data related_item[:data]

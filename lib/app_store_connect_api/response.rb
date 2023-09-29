@@ -8,8 +8,8 @@ module AppStoreConnectApi
       relationships = '' if relationships.nil?
       relationships = relationships.split(",")
 
-      @raw_response = raw_response
-      @relationships = Array(relationships)
+      @raw_response = snake_case(raw_response)
+      @relationships = snake_case(relationships)
     end
 
     def response
@@ -24,6 +24,22 @@ module AppStoreConnectApi
     end
 
     private
+
+    def snake_case(data)
+      if data.is_a? Hash
+        Utils::HashUtils.deep_transform_keys(data) { |key| Utils::StringUtils.underscore(key).to_sym }
+      elsif data.is_a? Array
+        data.map do |item|
+          if item.is_a? Hash
+            Utils::HashUtils.deep_transform_keys(data) { |key| Utils::StringUtils.underscore(key).to_sym }
+          else
+            Utils::StringUtils.underscore(item).to_sym
+          end
+        end
+      else
+        data
+      end
+    end
 
     def process_data_from_response
       case @raw_response[:data]
@@ -40,8 +56,9 @@ module AppStoreConnectApi
       result = { id: item[:id] }
       result.merge! item[:attributes] unless item[:attributes].nil?
       relationships.each do |relationship|
-        process_relationship item, relationship, result
+        result = process_relationship item, relationship, result
       end
+
       result
     end
 
@@ -49,6 +66,7 @@ module AppStoreConnectApi
       related_item = item[:relationships][relationship]
       data_item[:"#{relationship}_total"] = related_item[:meta][:paging][:total] if related_item.dig :meta, :paging
       data_item[relationship] = process_relationship_data related_item[:data]
+      data_item
     end
 
     def process_relationship_data(relationship_data)

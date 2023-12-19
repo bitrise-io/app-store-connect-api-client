@@ -29,7 +29,7 @@ $ bundle install
 ## Usage
 
 ```ruby
-client = AppStoreConnectApi::Client.new '<issuer ID>', '<key ID>', '<private key>'
+client = AppStoreConnectAPI::Client.new '<issuer ID>', '<key ID>', '<path to private key>'
 
 # Simple query
 client.apps filter: { bundle_id: 'company.org' }, limit: 5

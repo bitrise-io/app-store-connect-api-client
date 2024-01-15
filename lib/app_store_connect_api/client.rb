@@ -67,9 +67,14 @@ module AppStoreConnectApi
       @connection ||= Faraday.new(url: APP_STORE_CONNECT_API_ROOT_URL,
                                   request: { timeout: @request_timeout },
                                   headers: { 'Authorization' => "Bearer #{@authorization.token}" }) do |f|
+
+        f.request :retry,
+                  max: 3,
+                  interval: 1,
+                  interval_randomness: 0.2,
+                  backoff_factor: 1.5
         f.request :json
         f.response :json, content_type: /\bjson$/
-        f.adapter :net_http
       end
     end
   end

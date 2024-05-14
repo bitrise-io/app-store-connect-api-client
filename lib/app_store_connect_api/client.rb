@@ -72,7 +72,10 @@ module AppStoreConnectApi
                   max: 3,
                   interval: 1,
                   interval_randomness: 0.2,
-                  backoff_factor: 1.5
+                  backoff_factor: 1.5,
+                  methods: %i[post delete get patch put],
+                  retry_statuses: [408, 429, 502, 503, 504],
+                  exceptions: Faraday::Retry::Middleware::DEFAULT_EXCEPTIONS + [Faraday::ConnectionFailed]
         f.request :json
         f.response :json, content_type: /\bjson$/
       end

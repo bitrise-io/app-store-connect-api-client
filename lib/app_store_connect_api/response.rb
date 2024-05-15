@@ -70,7 +70,7 @@ module AppStoreConnectApi
     end
 
     def process_relationship_data(relationship_data)
-      return relationship_data if relationship_data.blank?
+      return relationship_data if relationship_data&.empty?
 
       case relationship_data
       when Array

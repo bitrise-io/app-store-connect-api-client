@@ -70,17 +70,16 @@ module AppStoreConnectApi
     end
 
     def process_relationship_data(relationship_data)
-      return relationship_data if relationship_data&.empty?
+      return relationship_data if relationship_data.nil? || relationship_data.empty?
 
-      case relationship_data
-      when Array
-        relationship_data.map { |relationship_id| related_included_item_for relationship_id }
-      else
-        related_included_item_for relationship_data
-      end
+      return relationship_data.map { |relationship_id| related_included_item_for relationship_id } if relationship_data.is_a? Array
+
+      related_included_item_for relationship_data
     end
 
     def related_included_item_for(relationship_id)
+      return relationship_id unless relationship_id.is_a?(Hash)
+
       related_item = @raw_response[:included].find { |el| el[:type] == relationship_id[:type] && el[:id] == relationship_id[:id] }
       process_data_item related_item
     end

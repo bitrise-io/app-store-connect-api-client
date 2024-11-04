@@ -3,11 +3,14 @@
 module AppStoreConnectApi
   class Authorization
     ALGORITHM = 'ES256'
+    TOKEN_AUDIENCE = "appstoreconnect-v1"
+    TOKEN_ENTERPRISE_AUDIENCE = "apple-developer-enterprise-v1"
 
-    def initialize(issuer_id, key_id, private_key)
+    def initialize(issuer_id, key_id, private_key, is_enterprise_account: false)
       @issuer_id = issuer_id
       @key_id = key_id
       @private_key = private_key
+      @is_enterprise_account = is_enterprise_account
     end
 
     def token
@@ -21,7 +24,11 @@ module AppStoreConnectApi
         iss: @issuer_id,
         iat: Time.now.to_i,
         exp: Time.now.to_i + (20 * 60),
-        aud: 'appstoreconnect-v1'
+        aud: if @is_enterprise_account
+               TOKEN_ENTERPRISE_AUDIENCE
+             else
+               TOKEN_AUDIENCE
+             end
       }
     end
 

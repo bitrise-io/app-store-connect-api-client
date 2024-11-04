@@ -6,7 +6,7 @@ module AppStoreConnectApi
 
     def initialize(errors)
       @errors = errors
-      super 'App Store Connect API request failed'
+      super('App Store Connect API request failed')
     end
 
     def code

@@ -12,10 +12,12 @@ module AppStoreConnectApi
     include Domain
 
     APP_STORE_CONNECT_API_ROOT_URL = 'https://api.appstoreconnect.apple.com'
+    APP_STORE_CONNECT_ENTERPRISE_API_ROOT_URL = 'https://api.enterprise.developer.apple.com/'
 
-    def initialize(issuer_id, key_id, private_key, request_timeout = 30)
-      @authorization = Authorization.new issuer_id, key_id, private_key
+    def initialize(issuer_id, key_id, private_key, request_timeout = 30, is_enterprise_account: false)
+      @authorization = Authorization.new issuer_id, key_id, private_key, is_enterprise_account:
       @request_timeout = request_timeout
+      @is_enterprise_account = is_enterprise_account
     end
 
     def get(path, options = {})
@@ -64,10 +66,9 @@ module AppStoreConnectApi
     end
 
     def connection
-      @connection ||= Faraday.new(url: APP_STORE_CONNECT_API_ROOT_URL,
+      @connection ||= Faraday.new(url: base_url,
                                   request: { timeout: @request_timeout },
                                   headers: { 'Authorization' => "Bearer #{@authorization.token}" }) do |f|
-
         f.request :retry,
                   max: 3,
                   interval: 1,
@@ -78,6 +79,14 @@ module AppStoreConnectApi
                   exceptions: Faraday::Retry::Middleware::DEFAULT_EXCEPTIONS + [Faraday::ConnectionFailed]
         f.request :json
         f.response :json, content_type: /\bjson$/
+      end
+    end
+
+    def base_url
+      if @is_enterprise_account
+        APP_STORE_CONNECT_ENTERPRISE_API_ROOT_URL
+      else
+        APP_STORE_CONNECT_API_ROOT_URL
       end
     end
   end

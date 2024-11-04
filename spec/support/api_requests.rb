@@ -5,7 +5,7 @@ RSpec.shared_context 'API requests' do
   let(:authorization) { instance_double AppStoreConnectApi::Authorization, token: 'bearer-token' }
 
   before do
-    allow(AppStoreConnectApi::Authorization).to receive(:new).with('issuer-id', 'key-id', 'private-key').and_return authorization
+    allow(AppStoreConnectApi::Authorization).to receive(:new).with('issuer-id', 'key-id', 'private-key', is_enterprise_account: false).and_return authorization
   end
 
   shared_examples_for 'a GET endpoint' do |url:, query_params: {}|

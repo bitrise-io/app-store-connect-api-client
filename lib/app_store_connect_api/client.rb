@@ -14,8 +14,8 @@ module AppStoreConnectApi
     APP_STORE_CONNECT_API_ROOT_URL = 'https://api.appstoreconnect.apple.com'
     APP_STORE_CONNECT_ENTERPRISE_API_ROOT_URL = 'https://api.enterprise.developer.apple.com/'
 
-    def initialize(issuer_id, key_id, private_key, request_timeout = 30, is_enterprise_account: false)
-      @authorization = Authorization.new issuer_id, key_id, private_key, is_enterprise_account:
+    def initialize(issuer_id, key_id, private_key, request_timeout = 30, is_enterprise_account = false)
+      @authorization = Authorization.new issuer_id, key_id, private_key, is_enterprise_account: is_enterprise_account
       @request_timeout = request_timeout
       @is_enterprise_account = is_enterprise_account
     end

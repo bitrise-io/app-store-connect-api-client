@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 RSpec.describe AppStoreConnectApi::Client do
-  subject(:client) { described_class.new 'issuer-id', 'key-id', 'private-key' }
+  subject(:client) { described_class.new 'issuer-id', 'key-id', 'private-key', 30, is_enterprise_account }
 
   let(:authorization) { instance_double AppStoreConnectApi::Authorization, token: 'bearer-token' }
+  let(:is_enterprise_account) { false }
 
   before do
-    allow(AppStoreConnectApi::Authorization).to receive(:new).with('issuer-id', 'key-id', 'private-key').and_return authorization
+    allow(AppStoreConnectApi::Authorization).to receive(:new).with('issuer-id', 'key-id', 'private-key', is_enterprise_account: is_enterprise_account).and_return authorization
   end
 
   shared_examples 'it raises an error if the request failed' do
@@ -27,8 +28,14 @@ RSpec.describe AppStoreConnectApi::Client do
 
     context 'when the request fails and the response has no details' do
       before do
-        stub_request(:any, /api\.appstoreconnect\.apple\.com/)
-          .to_return(status: 500, body: 'Internal server error')
+        if is_enterprise_account
+          stub_request(:any, /api\.enterprise\.developer\.apple\.com/)
+            .to_return(status: 500, body: 'Internal server error')
+        else
+          stub_request(:any, /api\.appstoreconnect\.apple\.com/)
+            .to_return(status: 500, body: 'Internal server error')
+
+        end
       end
 
       it 'raises an error' do
@@ -306,5 +313,220 @@ RSpec.describe AppStoreConnectApi::Client do
     end
 
     include_examples 'it raises an error if the request failed'
+  end
+
+  describe 'using Enterprise API' do
+    let(:is_enterprise_account) { true }
+
+    describe '#get' do
+      subject(:perform_request) { client.get '/test/endpoint' }
+
+      let(:query_params) { {} }
+      let(:api_response_status) { 200 }
+      let(:api_response_body) { { data: 'response' } }
+
+      before do
+        stub_request(:get, 'https://api.enterprise.developer.apple.com/test/endpoint')
+          .with(headers: { authorization: 'Bearer bearer-token' },
+                query: query_params)
+          .to_return(status: api_response_status,
+                     body: JSON.dump(api_response_body),
+                     headers: { content_type: 'application/json' })
+      end
+
+      it 'executes a GET request on the App Store Connect API and returns the response body with symbolized keys' do
+        expect(perform_request).to eq 'response'
+      end
+
+      context 'when there are query parameters' do
+        subject(:perform_request) { client.get '/test/endpoint', review_submission: { data: 'id' } }
+
+        let(:query_params) { { reviewSubmission: { data: 'id' } } }
+
+        it 'passes in the query parameters, transformed into camelCase format' do
+          expect(perform_request).to eq 'response'
+        end
+      end
+
+      context 'when the response contains camelCase fields' do
+        let(:api_response_body) { { data: { id: 'some-review-id', attributes: { reviewSubmission: 'valid' } } } }
+
+        it 'transforms camelCase keys into snake_case' do
+          expect(perform_request).to eq({ id: 'some-review-id', review_submission: 'valid' })
+        end
+      end
+
+      include_examples 'it raises an error if the request failed'
+    end
+
+    describe '#post' do
+      subject(:perform_request) { client.post '/test/endpoint', attributes }
+
+      let(:attributes) { { attribute: 'value' } }
+      let(:body) { { attribute: 'value' } }
+      let(:api_response_status) { 200 }
+      let(:api_response_body) { { data: 'response' } }
+
+      before do
+        stub_request(:post, 'https://api.enterprise.developer.apple.com/test/endpoint')
+          .with(headers: { authorization: 'Bearer bearer-token',
+                           content_type: 'application/json' },
+                body: JSON.dump(body))
+          .to_return(status: api_response_status,
+                     body: JSON.dump(api_response_body),
+                     headers: { content_type: 'application/json' })
+      end
+
+      it 'executes a CREATE request on the App Store Connect API and returns the response body with symbolized keys' do
+        expect(perform_request).to eq 'response'
+      end
+
+      context 'when the body contains snake case attributes' do
+        let(:attributes) { { whats_new: 'value' } }
+        let(:body) { { whatsNew: 'value' } }
+
+        it 'transforms the attributes into camelCase format' do
+          expect(perform_request).to eq 'response'
+        end
+      end
+
+      context 'when the response contains camelCase fields' do
+        let(:api_response_body) { { data: { id: 'some-review-id', attributes: { reviewSubmission: 'valid' } } } }
+
+        it 'transforms camelCase keys into snake_case' do
+          expect(perform_request).to eq({ id: 'some-review-id', review_submission: 'valid' })
+        end
+      end
+
+      include_examples 'it raises an error if the request failed'
+    end
+
+    describe '#patch' do
+      subject(:perform_request) { client.patch '/test/endpoint', attributes }
+
+      let(:attributes) { { attribute: 'value' } }
+      let(:body) { { attribute: 'value' } }
+      let(:api_response_status) { 200 }
+      let(:api_response_body) { { data: 'response' } }
+
+      before do
+        stub_request(:patch, 'https://api.enterprise.developer.apple.com/test/endpoint')
+          .with(headers: { authorization: 'Bearer bearer-token',
+                           content_type: 'application/json' },
+                body: JSON.dump(body))
+          .to_return(status: api_response_status,
+                     body: JSON.dump(api_response_body),
+                     headers: { content_type: 'application/json' })
+      end
+
+      it 'executes a PATCH request on the App Store Connect API and returns the response body with symbolized keys' do
+        expect(perform_request).to eq 'response'
+      end
+
+      context 'when the body contains snake case attributes' do
+        let(:attributes) { { whats_new: 'value' } }
+        let(:body) { { whatsNew: 'value' } }
+
+        it 'transforms the attributes into camelCase format' do
+          expect(perform_request).to eq 'response'
+        end
+      end
+
+      context 'when the response contains camelCase fields' do
+        let(:api_response_body) { { data: { id: 'some-review-id', attributes: { reviewSubmission: 'valid' } } } }
+
+        it 'transforms camelCase keys into snake_case' do
+          expect(perform_request).to eq({ id: 'some-review-id', review_submission: 'valid' })
+        end
+      end
+
+      include_examples 'it raises an error if the request failed'
+    end
+
+    describe '#delete' do
+      subject(:perform_request) { client.delete '/test/endpoint' }
+
+      let(:api_response_status) { 200 }
+      let(:api_response_body) { { data: 'response' } }
+
+      before do
+        stub_request(:delete, 'https://api.enterprise.developer.apple.com/test/endpoint')
+          .with(headers: { authorization: 'Bearer bearer-token' })
+          .to_return(status: api_response_status,
+                     body: JSON.dump(api_response_body),
+                     headers: { content_type: 'application/json' })
+      end
+
+      it 'executes a DELETE request on the App Store Connect API and returns the response body with symbolized keys' do
+        expect(perform_request).to eq 'response'
+      end
+
+      context 'when the response contains camelCase fields' do
+        let(:api_response_body) { { data: { id: 'some-review-id', attributes: { reviewSubmission: 'valid' } } } }
+
+        it 'transforms camelCase keys into snake_case' do
+          expect(client.delete('/test/endpoint')).to eq({ id: 'some-review-id', review_submission: 'valid' })
+        end
+      end
+
+      context 'when the request has a body' do
+        let(:perform_request) { client.delete '/test/endpoint', attributes }
+
+        let(:attributes) { { app_store_version: 'app-store-version-id' } }
+        let(:body) { { appStoreVersin: 'app-store-version-id' } }
+
+        before do
+          stub_request(:patch, 'https://api.enterprise.developer.apple.com/test/endpoint')
+            .with(headers: { authorization: 'Bearer bearer-token',
+                             content_type: 'application/json' },
+                  body: JSON.dump(body))
+            .to_return(status: api_response_status,
+                       body: JSON.dump(api_response_body),
+                       headers: { content_type: 'application/json' })
+        end
+
+        it 'executes the DELETE request including the body' do
+          expect(perform_request).to eq 'response'
+        end
+      end
+
+      include_examples 'it raises an error if the request failed'
+    end
+
+    describe '#more?' do
+      subject { client.more? resource }
+
+      let(:resource) { { links: { next: 'https://api.enterprise.developer.apple.com/link-to-next-page' } } }
+
+      it { is_expected.to be true }
+
+      context 'when there is no "next" link in the resource' do
+        let(:resource) { { links: {} } }
+
+        it { is_expected.to be false }
+      end
+    end
+
+    describe '#next' do
+      subject(:next_page) { client.next resource }
+
+      let(:resource) { { links: { next: 'https://api.enterprise.developer.apple.com/link-to-next-page?page=2' } } }
+      let(:api_response_status) { 200 }
+      let(:api_response_body) { { data: 'response' } }
+
+      before do
+        stub_request(:get, 'https://api.enterprise.developer.apple.com/link-to-next-page?page=2')
+          .with(headers: { authorization: 'Bearer bearer-token' })
+          .to_return(status: api_response_status,
+                     body: JSON.dump(api_response_body),
+                     headers: { content_type: 'application/json' })
+      end
+
+      it 'fetches the next page of results based on the "next" link in the resource' do
+        expect(next_page).to eq 'response'
+      end
+
+      include_examples 'it raises an error if the request failed'
+    end
   end
 end

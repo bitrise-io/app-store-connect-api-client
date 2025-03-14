@@ -74,8 +74,10 @@ module AppStoreConnectApi
                   interval: 1,
                   interval_randomness: 0.2,
                   backoff_factor: 1.5,
-                  methods: %i[post delete get patch put],
-                  retry_statuses: [408, 429, 502, 503, 504],
+                  # Updated based on the official recommendation: https://github.com/lostisland/faraday-retry?tab=readme-ov-file#specify-a-custom-retry-logic
+                  methods: [],
+                  retry_statuses: [408, 429, 500, 502, 503, 504],
+                  retry_if: ->(env, _exc) { [408, 429, 502, 503, 504].include?(env.status) || (env.status == 500 && env.body.to_s.include?('UNEXPECTED_ERROR')) },
                   exceptions: Faraday::Retry::Middleware::DEFAULT_EXCEPTIONS + [Faraday::ConnectionFailed]
         f.request :json
         f.response :json, content_type: /\bjson$/

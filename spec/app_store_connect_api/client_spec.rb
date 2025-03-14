@@ -15,7 +15,7 @@ RSpec.describe AppStoreConnectApi::Client do
       let(:network_error) { Faraday::ConnectionFailed.new 'Network error' }
 
       before do
-        allow_any_instance_of(Faraday::Connection).to receive(:send).and_raise network_error
+        allow_any_instance_of(Faraday::Adapter::NetHttp).to receive(:call).and_raise network_error
       end
 
       it 'raises an error' do
@@ -110,14 +110,19 @@ RSpec.describe AppStoreConnectApi::Client do
     let(:query_params) { {} }
     let(:api_response_status) { 200 }
     let(:api_response_body) { { data: 'response' } }
+    let(:stub_responses) {
+      [
+        status: api_response_status,
+        body: JSON.dump(api_response_body),
+        headers: { content_type: 'application/json' }
+      ]
+    }
 
     before do
       stub_request(:get, 'https://api.appstoreconnect.apple.com/test/endpoint')
         .with(headers: { authorization: 'Bearer bearer-token' },
               query: query_params)
-        .to_return(status: api_response_status,
-                   body: JSON.dump(api_response_body),
-                   headers: { content_type: 'application/json' })
+        .to_return(stub_responses)
     end
 
     it 'executes a GET request on the App Store Connect API and returns the response body with symbolized keys' do
@@ -139,6 +144,52 @@ RSpec.describe AppStoreConnectApi::Client do
 
       it 'transforms camelCase keys into snake_case' do
         expect(perform_request).to eq({ id: 'some-review-id', review_submission: 'valid' })
+      end
+    end
+
+    context 'when the first response is 500 - UNEXPECTED_ERROR but the second is successful' do
+      let(:stub_responses) do
+        [
+
+          {
+            status: 500,
+            body: '{"errors":[{"status": "500",	"code": "UNEXPECTED_ERROR"}]}',
+            headers: { content_type: 'application/json' }
+          },
+          {
+            status: api_response_status,
+            body: JSON.dump(api_response_body),
+            headers: { content_type: 'application/json' }
+          }
+        ]
+      end
+
+      it 'executes a GET request on the App Store Connect API and returns the response body with symbolized keys' do
+        expect(perform_request).to eq 'response'
+      end
+    end
+
+    context 'when the first response is 500 but not UNEXPECTED_ERROR' do
+      let(:stub_responses) do
+        [
+
+          {
+            status: 500,
+            body: '{"errors": [{"status": "500",	"code": "OTHER_ERROR"}]}',
+            headers: { content_type: 'application/json' }
+          },
+          {
+            status: api_response_status,
+            body: JSON.dump(api_response_body),
+            headers: { content_type: 'application/json' }
+          }
+        ]
+      end
+
+      it 'raises an error' do
+        expect { perform_request }.to raise_error AppStoreConnectApi::ApiError do |error|
+          expect(error).to have_attributes message: 'App Store Connect API request failed'
+        end
       end
     end
 

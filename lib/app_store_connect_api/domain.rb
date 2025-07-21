@@ -35,6 +35,7 @@ require_relative 'domain/review_submissions'
 require_relative 'domain/sandbox_testers'
 require_relative 'domain/users'
 require_relative 'domain/user_invitations'
+require_relative 'domain/webhooks'
 
 module AppStoreConnectApi
   module Domain
@@ -73,5 +74,6 @@ module AppStoreConnectApi
     include SandboxTesters
     include UserInvitations
     include Users
+    include Webhooks
   end
 end

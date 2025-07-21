@@ -26,6 +26,7 @@ require_relative 'domain/builds'
 require_relative 'domain/bundle_id_capabilities'
 require_relative 'domain/bundle_ids'
 require_relative 'domain/certificates'
+require_relative 'domain/create_webhooks'
 require_relative 'domain/customer_reviews'
 require_relative 'domain/devices'
 require_relative 'domain/prerelease_versions'
@@ -64,6 +65,7 @@ module AppStoreConnectApi
     include BundleIdCapabilities
     include BundleIds
     include Certificates
+    include CreateWebhooks
     include CustomerReviews
     include Devices
     include PrereleaseVersions

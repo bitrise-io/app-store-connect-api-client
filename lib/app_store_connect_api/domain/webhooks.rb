@@ -21,6 +21,11 @@ module AppStoreConnectApi
           }
         )
       end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/delete-v1-webhooks-_id_
+      def delete_webhook(id:)
+        delete("/v1/webhooks/#{id}")
+      end
     end
   end
 end

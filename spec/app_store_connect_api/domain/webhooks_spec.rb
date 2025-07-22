@@ -40,4 +40,10 @@ RSpec.describe AppStoreConnectApi::Domain::Webhooks, :api do
       }
     )
   end
+
+  describe '#delete_webhook' do
+    subject { client.delete_webhook(id: 'webhook-id') }
+
+    it_behaves_like('a DELETE endpoint', url: 'https://api.appstoreconnect.apple.com/v1/webhooks/webhook-id')
+  end
 end

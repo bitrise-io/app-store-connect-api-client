@@ -2,6 +2,7 @@
 
 module AppStoreConnectApi
   class Authorization
+    TEST = 'VAR'
     ALGORITHM = 'ES256'
     TOKEN_AUDIENCE = "appstoreconnect-v1"
     TOKEN_ENTERPRISE_AUDIENCE = "apple-developer-enterprise-v1"

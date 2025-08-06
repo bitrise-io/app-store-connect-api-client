@@ -120,6 +120,11 @@ module AppStoreConnectApi
       def app_app_availability(app_id, options = {})
         get "/v1/apps/#{app_id}/appAvailability", options
       end
+
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/get-v1-apps-_id_-webhooks
+      def app_webhooks(app_id, options = {})
+        get "/v1/apps/#{app_id}/webhooks", options
+      end
     end
   end
 end

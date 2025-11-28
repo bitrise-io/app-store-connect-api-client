@@ -46,8 +46,12 @@ module AppStoreConnectApi
 
     private
 
-    def link_to_next_page_in(response)
-      response.dig(:links, :next)
+    def base_url
+      if @is_enterprise_account
+        APP_STORE_CONNECT_ENTERPRISE_API_ROOT_URL
+      else
+        APP_STORE_CONNECT_API_ROOT_URL
+      end
     end
 
     def call_api(method, path, params = {}, payload = {})
@@ -77,19 +81,54 @@ module AppStoreConnectApi
                   # Updated based on the official recommendation: https://github.com/lostisland/faraday-retry?tab=readme-ov-file#specify-a-custom-retry-logic
                   methods: [],
                   retry_statuses: [408, 429, 500, 502, 503, 504],
-                  retry_if: ->(env, _exc) { [408, 429, 502, 503, 504].include?(env.status) || (env.status == 500 && env.body.to_s.include?('UNEXPECTED_ERROR')) },
-                  exceptions: Faraday::Retry::Middleware::DEFAULT_EXCEPTIONS + [Faraday::ConnectionFailed]
+                  retry_if: ->(env, exc) { retry_if(env, exc) },
+                  exceptions: exceptions_to_retry
         f.request :json
         f.response :json, content_type: /\bjson$/
       end
     end
 
-    def base_url
-      if @is_enterprise_account
-        APP_STORE_CONNECT_ENTERPRISE_API_ROOT_URL
-      else
-        APP_STORE_CONNECT_API_ROOT_URL
-      end
+    def exceptions_to_retry
+      Faraday::Retry::Middleware::DEFAULT_EXCEPTIONS + [
+        Errno::ECONNRESET,
+        Errno::ECONNREFUSED,
+        Errno::EHOSTUNREACH,
+        Errno::ENETUNREACH,
+        Faraday::ConnectionFailed,
+        Faraday::SSLError
+      ]
+    end
+
+    def link_to_next_page_in(response)
+      response.dig(:links, :next)
+    end
+
+    # Only retry ConnectionFailed errors if it looks transient
+    def retry_connection_failed_error?(_env, exc)
+      msg = exc.message.downcase
+
+      # Don't retry if it's a permanent DNS/hostname issue
+      !msg.include?('nxdomain') && # hostname doesn't exist
+        !msg.include?('getaddrinfo') && # bad hostname format
+        !msg.include?('name or service not known')
+    end
+
+    def retry_if(env, exc)
+      return true if [408, 429, 502, 503, 504].include?(env.status)
+      return true if env.status == 500 && env.body.to_s.include?('UNEXPECTED_ERROR')
+
+      return retry_connection_failed_error?(env, exc) if exc.is_a?(Faraday::ConnectionFailed)
+      return retry_ssl_error?(env, exc) if exc.is_a?(Faraday::SSLError)
+
+      false
+    end
+
+    # Only retry SSLErrors if it looks transient
+    def retry_ssl_error?(_env, exc)
+      # Don't retry cert validation failures
+      !exc.message.include?('certificate verify failed') &&
+        !exc.message.include?('hostname mismatch') &&
+        !exc.message.include?('SSL_ERROR_ZERO_RETURN')
     end
   end
 end

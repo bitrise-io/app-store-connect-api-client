@@ -12,16 +12,67 @@ RSpec.describe AppStoreConnectApi::Client do
 
   shared_examples 'it raises an error if the request failed' do
     context 'when the request fails without reaching the API' do
+      let(:net_http_mock) { instance_double Faraday::Adapter::NetHttp }
       let(:network_error) { Faraday::ConnectionFailed.new 'Network error' }
 
       before do
-        allow_any_instance_of(Faraday::Adapter::NetHttp).to receive(:call).and_raise network_error
+        allow(Faraday::Adapter::NetHttp).to receive(:new).and_return net_http_mock
+        allow(net_http_mock).to receive(:call).and_raise network_error
       end
 
       it 'raises an error' do
         expect { subject }.to raise_error AppStoreConnectApi::Error do |error|
           expect(error).to have_attributes message: 'Network error',
                                            cause: network_error
+        end
+      end
+
+      it 'does retry the request' do
+        expect { subject }.to raise_error AppStoreConnectApi::Error do
+          expect(net_http_mock).to have_received(:call).at_least(:twice)
+        end
+      end
+
+      context 'when the error is non-transient' do
+        let(:network_error) { Faraday::ConnectionFailed.new 'getaddrinfo' }
+
+        it 'does not retry the request' do
+          expect { subject }.to raise_error AppStoreConnectApi::Error do
+            expect(net_http_mock).to have_received(:call).exactly(:once)
+          end
+        end
+      end
+    end
+
+    context 'when the request fails during protocol negotiation' do
+      let(:net_http_mock) { instance_double Faraday::Adapter::NetHttp }
+      let(:protocol_error) { Faraday::SSLError.new 'SSLRead::Error: Connection reset by peer' }
+
+      before do
+        allow(Faraday::Adapter::NetHttp).to receive(:new).and_return net_http_mock
+        allow(net_http_mock).to receive(:call).and_raise protocol_error
+      end
+
+      it 'raises an error' do
+        expect { subject }.to raise_error AppStoreConnectApi::Error do |error|
+          expect(error).to have_attributes message: 'SSLRead::Error: Connection reset by peer',
+                                           cause: protocol_error
+        end
+      end
+
+      it 'does retry the request' do
+        expect { subject }.to raise_error AppStoreConnectApi::Error do
+          expect(net_http_mock).to have_received(:call).at_least(:twice)
+        end
+      end
+
+      context 'when the error is non-transient' do
+        let(:protocol_error) { Faraday::SSLError.new 'hostname mismatch' }
+
+        it 'does not retry the request' do
+          expect { subject }.to raise_error AppStoreConnectApi::Error do
+            expect(net_http_mock).to have_received(:call).exactly(:once)
+          end
         end
       end
     end

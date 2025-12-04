@@ -74,7 +74,7 @@ module AppStoreConnectApi
                                   request: { timeout: @request_timeout },
                                   headers: { 'Authorization' => "Bearer #{@authorization.token}" }) do |f|
         f.request :retry,
-                  max: 3,
+                  max: 2,
                   interval: 1,
                   interval_randomness: 0.2,
                   backoff_factor: 1.5,
@@ -94,8 +94,11 @@ module AppStoreConnectApi
         Errno::ECONNREFUSED,
         Errno::EHOSTUNREACH,
         Errno::ENETUNREACH,
+        Errno::ETIMEDOUT,
         Faraday::ConnectionFailed,
-        Faraday::SSLError
+        Faraday::SSLError,
+        Faraday::TimeoutError,
+        Timeout::Error
       ]
     end
 

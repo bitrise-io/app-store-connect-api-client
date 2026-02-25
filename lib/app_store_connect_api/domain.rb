@@ -10,6 +10,7 @@ require_relative 'domain/app_price_schedules'
 require_relative 'domain/app_store_version_localizations'
 require_relative 'domain/app_store_version_phased_releases'
 require_relative 'domain/app_store_version_release_requests'
+require_relative 'domain/app_store_version_submissions'
 require_relative 'domain/app_store_versions'
 require_relative 'domain/apps'
 require_relative 'domain/beta_app_localizations'
@@ -49,6 +50,7 @@ module AppStoreConnectApi
     include AppStoreVersionLocalizations
     include AppStoreVersionPhasedReleases
     include AppStoreVersionReleaseRequests
+    include AppStoreVersionSubmissions
     include AppStoreVersions
     include Apps
     include BetaAppLocalizations

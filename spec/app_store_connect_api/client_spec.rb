@@ -417,6 +417,41 @@ RSpec.describe AppStoreConnectApi::Client do
     include_examples 'it raises an error if the request failed'
   end
 
+  describe 'read timeout handling' do
+    let(:net_http_mock) { instance_double Faraday::Adapter::NetHttp }
+    let(:next_page_resource) { { links: { next: 'https://api.appstoreconnect.apple.com/link-to-next-page' } } }
+
+    before do
+      allow(Faraday::Adapter::NetHttp).to receive(:new).and_return net_http_mock
+      allow(net_http_mock).to receive(:call).and_raise Faraday::TimeoutError.new('Net::ReadTimeout')
+    end
+
+    it 'retries a GET request, which is safe to repeat' do
+      expect { client.get '/test/endpoint' }.to raise_error AppStoreConnectApi::Error
+      expect(net_http_mock).to have_received(:call).at_least(:twice)
+    end
+
+    it 'retries fetching the next page, which is also a GET' do
+      expect { client.next next_page_resource }.to raise_error AppStoreConnectApi::Error
+      expect(net_http_mock).to have_received(:call).at_least(:twice)
+    end
+
+    it 'does not retry a POST request, which could duplicate a submission' do
+      expect { client.post '/test/endpoint', { attribute: 'value' } }.to raise_error AppStoreConnectApi::Error
+      expect(net_http_mock).to have_received(:call).exactly(:once)
+    end
+
+    it 'does not retry a PATCH request' do
+      expect { client.patch '/test/endpoint', { attribute: 'value' } }.to raise_error AppStoreConnectApi::Error
+      expect(net_http_mock).to have_received(:call).exactly(:once)
+    end
+
+    it 'does not retry a DELETE request' do
+      expect { client.delete '/test/endpoint' }.to raise_error AppStoreConnectApi::Error
+      expect(net_http_mock).to have_received(:call).exactly(:once)
+    end
+  end
+
   describe 'using Enterprise API' do
     let(:is_enterprise_account) { true }
 

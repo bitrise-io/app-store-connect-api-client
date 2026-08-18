@@ -15,7 +15,6 @@ module AppStoreConnectApi
     APP_STORE_CONNECT_ENTERPRISE_API_ROOT_URL = 'https://api.enterprise.developer.apple.com/'
 
     TIMEOUT_ERRORS = [Faraday::TimeoutError, Timeout::Error, Errno::ETIMEDOUT].freeze
-
     RETRIABLE_TIMEOUT_METHODS = %i[get head].freeze
 
     def initialize(issuer_id, key_id, private_key, request_timeout = 30, is_enterprise_account = false)

@@ -14,6 +14,9 @@ module AppStoreConnectApi
     APP_STORE_CONNECT_API_ROOT_URL = 'https://api.appstoreconnect.apple.com'
     APP_STORE_CONNECT_ENTERPRISE_API_ROOT_URL = 'https://api.enterprise.developer.apple.com/'
 
+    TIMEOUT_ERRORS = [Faraday::TimeoutError, Timeout::Error, Errno::ETIMEDOUT].freeze
+    RETRIABLE_TIMEOUT_METHODS = %i[get head].freeze
+
     def initialize(issuer_id, key_id, private_key, request_timeout = 30, is_enterprise_account = false)
       @authorization = Authorization.new issuer_id, key_id, private_key, is_enterprise_account: is_enterprise_account
       @request_timeout = request_timeout
@@ -122,8 +125,13 @@ module AppStoreConnectApi
 
       return retry_connection_failed_error?(env, exc) if exc.is_a?(Faraday::ConnectionFailed)
       return retry_ssl_error?(env, exc) if exc.is_a?(Faraday::SSLError)
+      return RETRIABLE_TIMEOUT_METHODS.include?(env[:method]) if timeout_error?(exc)
 
       false
+    end
+
+    def timeout_error?(exc)
+      TIMEOUT_ERRORS.any? { |timeout_error| exc.is_a? timeout_error }
     end
 
     # Only retry SSLErrors if it looks transient

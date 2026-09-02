@@ -41,6 +41,33 @@ RSpec.describe AppStoreConnectApi::Domain::Webhooks, :api do
     )
   end
 
+  describe '#update_webhook' do
+    subject do
+      client.update_webhook(
+        'webhook-id',
+        {
+          enabled: false,
+          event_types: %w[APP_STORE_VERSION_APP_VERSION_STATE_UPDATED BUILD_UPLOAD_STATE_UPDATED]
+        }
+      )
+    end
+
+    it_behaves_like(
+      'a PATCH endpoint',
+      url: 'https://api.appstoreconnect.apple.com/v1/webhooks/webhook-id',
+      body: {
+        data: {
+          attributes: {
+            enabled: false,
+            eventTypes: %w[APP_STORE_VERSION_APP_VERSION_STATE_UPDATED BUILD_UPLOAD_STATE_UPDATED]
+          },
+          id: 'webhook-id',
+          type: 'webhooks'
+        }
+      }
+    )
+  end
+
   describe '#delete_webhook' do
     subject { client.delete_webhook(id: 'webhook-id') }
 

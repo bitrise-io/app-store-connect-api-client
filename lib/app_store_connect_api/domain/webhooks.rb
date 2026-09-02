@@ -22,6 +22,11 @@ module AppStoreConnectApi
         )
       end
 
+      # @see https://developer.apple.com/documentation/appstoreconnectapi/patch-v1-webhooks-_id_
+      def update_webhook(id, attributes)
+        patch("/v1/webhooks/#{id}", data: { attributes: attributes, id: id, type: 'webhooks' })
+      end
+
       # @see https://developer.apple.com/documentation/appstoreconnectapi/delete-v1-webhooks-_id_
       def delete_webhook(id:)
         delete("/v1/webhooks/#{id}")

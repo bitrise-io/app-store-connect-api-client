@@ -62,10 +62,18 @@ module AppStoreConnectApi
         req.params = camel_case(params) unless params.empty?
         req.body = camel_case(payload) unless payload.empty?
       end
+      # A gateway error can come back empty, as HTML, or as JSON without `errors`, which Response would read
+      # as an empty success. It isn't an answer from the API, so raise the generic Error rather than ApiError.
+      raise Error, http_error_message(response) if response.status >= 400 && !(response.body.is_a?(Hash) && response.body.key?('errors'))
 
       Response.new(response.body, params[:include]).response
     rescue Faraday::Error => error
       raise Error, error
+    end
+
+    def http_error_message(response)
+      reason = response.reason_phrase.to_s.strip
+      "#{reason.empty? ? 'HTTP error' : reason} (#{response.status})"
     end
 
     def camel_case(params)
@@ -120,6 +128,9 @@ module AppStoreConnectApi
     end
 
     def retry_if(env, exc)
+      # App Store Connect can apply a create or update and still fail the response, so a repeat would duplicate it.
+      return false unless Faraday::Retry::Middleware::IDEMPOTENT_METHODS.include?(env[:method])
+
       return true if [408, 429, 502, 503, 504].include?(env.status)
       return true if env.status == 500 && env.body.to_s.include?('UNEXPECTED_ERROR')
 

@@ -10,7 +10,7 @@ RSpec.describe AppStoreConnectApi::Client do
     allow(AppStoreConnectApi::Authorization).to receive(:new).with('issuer-id', 'key-id', 'private-key', is_enterprise_account: is_enterprise_account).and_return authorization
   end
 
-  shared_examples 'it raises an error if the request failed' do
+  shared_examples 'it raises an error if the request failed' do |retried: true|
     context 'when the request fails without reaching the API' do
       let(:net_http_mock) { instance_double Faraday::Adapter::NetHttp }
       let(:network_error) { Faraday::ConnectionFailed.new 'Network error' }
@@ -27,9 +27,9 @@ RSpec.describe AppStoreConnectApi::Client do
         end
       end
 
-      it 'does retry the request' do
+      it(retried ? 'does retry the request' : 'does not retry the request') do
         expect { subject }.to raise_error AppStoreConnectApi::Error do
-          expect(net_http_mock).to have_received(:call).at_least(:twice)
+          expect(net_http_mock).to have_received(:call).exactly(retried ? 3 : 1).times
         end
       end
 
@@ -60,9 +60,9 @@ RSpec.describe AppStoreConnectApi::Client do
         end
       end
 
-      it 'does retry the request' do
+      it(retried ? 'does retry the request' : 'does not retry the request') do
         expect { subject }.to raise_error AppStoreConnectApi::Error do
-          expect(net_http_mock).to have_received(:call).at_least(:twice)
+          expect(net_http_mock).to have_received(:call).exactly(retried ? 3 : 1).times
         end
       end
 
@@ -81,18 +81,16 @@ RSpec.describe AppStoreConnectApi::Client do
       before do
         if is_enterprise_account
           stub_request(:any, /api\.enterprise\.developer\.apple\.com/)
-            .to_return(status: 500, body: 'Internal server error')
+            .to_return(status: [500, 'Internal Server Error'], body: 'Internal server error')
         else
           stub_request(:any, /api\.appstoreconnect\.apple\.com/)
-            .to_return(status: 500, body: 'Internal server error')
+            .to_return(status: [500, 'Internal Server Error'], body: 'Internal server error')
 
         end
       end
 
       it 'raises an error' do
-        expect { subject }.to raise_error AppStoreConnectApi::Error do |error|
-          expect(error).to have_attributes message: 'Internal server error'
-        end
+        expect { subject }.to raise_error AppStoreConnectApi::Error, 'Internal Server Error (500)'
       end
     end
 
@@ -286,7 +284,7 @@ RSpec.describe AppStoreConnectApi::Client do
       end
     end
 
-    include_examples 'it raises an error if the request failed'
+    include_examples 'it raises an error if the request failed', retried: false
   end
 
   describe '#patch' do
@@ -328,7 +326,7 @@ RSpec.describe AppStoreConnectApi::Client do
       end
     end
 
-    include_examples 'it raises an error if the request failed'
+    include_examples 'it raises an error if the request failed', retried: false
   end
 
   describe '#delete' do
@@ -426,17 +424,17 @@ RSpec.describe AppStoreConnectApi::Client do
       allow(net_http_mock).to receive(:call).and_raise Faraday::TimeoutError.new('Net::ReadTimeout')
     end
 
-    it 'retries a GET request, which is safe to repeat' do
+    it 'retries a GET request' do
       expect { client.get '/test/endpoint' }.to raise_error AppStoreConnectApi::Error
       expect(net_http_mock).to have_received(:call).at_least(:twice)
     end
 
-    it 'retries fetching the next page, which is also a GET' do
+    it 'retries fetching the next page' do
       expect { client.next next_page_resource }.to raise_error AppStoreConnectApi::Error
       expect(net_http_mock).to have_received(:call).at_least(:twice)
     end
 
-    it 'does not retry a POST request, which could duplicate a submission' do
+    it 'does not retry a POST request' do
       expect { client.post '/test/endpoint', { attribute: 'value' } }.to raise_error AppStoreConnectApi::Error
       expect(net_http_mock).to have_received(:call).exactly(:once)
     end
@@ -449,6 +447,32 @@ RSpec.describe AppStoreConnectApi::Client do
     it 'does not retry a DELETE request' do
       expect { client.delete '/test/endpoint' }.to raise_error AppStoreConnectApi::Error
       expect(net_http_mock).to have_received(:call).exactly(:once)
+    end
+  end
+
+  describe 'retrying error responses' do
+    let(:url) { 'https://api.appstoreconnect.apple.com/test/endpoint' }
+    let(:success) { { status: 200, body: '{"data":"response"}', headers: { content_type: 'application/json' } } }
+
+    it 'does not retry a POST that gets a gateway error' do
+      stub_request(:post, url).to_return({ status: 504 }, success)
+
+      expect { client.post '/test/endpoint', { attribute: 'value' } }.to raise_error AppStoreConnectApi::Error, 'HTTP error (504)'
+      expect(a_request(:post, url)).to have_been_made.once
+    end
+
+    it 'does not retry a POST that is rate limited' do
+      stub_request(:post, url).to_return({ status: 429 }, success)
+
+      expect { client.post '/test/endpoint', { attribute: 'value' } }.to raise_error AppStoreConnectApi::Error, 'HTTP error (429)'
+      expect(a_request(:post, url)).to have_been_made.once
+    end
+
+    it 'raises an error when a GET runs out of retries on body-less gateway errors' do
+      stub_request(:get, url).to_return(status: 504)
+
+      expect { client.get '/test/endpoint' }.to raise_error AppStoreConnectApi::Error, 'HTTP error (504)'
+      expect(a_request(:get, url)).to have_been_made.times(3)
     end
   end
 
@@ -535,7 +559,7 @@ RSpec.describe AppStoreConnectApi::Client do
         end
       end
 
-      include_examples 'it raises an error if the request failed'
+      include_examples 'it raises an error if the request failed', retried: false
     end
 
     describe '#patch' do
@@ -577,7 +601,7 @@ RSpec.describe AppStoreConnectApi::Client do
         end
       end
 
-      include_examples 'it raises an error if the request failed'
+      include_examples 'it raises an error if the request failed', retried: false
     end
 
     describe '#delete' do

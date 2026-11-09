@@ -424,17 +424,17 @@ RSpec.describe AppStoreConnectApi::Client do
       allow(net_http_mock).to receive(:call).and_raise Faraday::TimeoutError.new('Net::ReadTimeout')
     end
 
-    it 'retries a GET request, which is safe to repeat' do
+    it 'retries a GET request' do
       expect { client.get '/test/endpoint' }.to raise_error AppStoreConnectApi::Error
       expect(net_http_mock).to have_received(:call).at_least(:twice)
     end
 
-    it 'retries fetching the next page, which is also a GET' do
+    it 'retries fetching the next page' do
       expect { client.next next_page_resource }.to raise_error AppStoreConnectApi::Error
       expect(net_http_mock).to have_received(:call).at_least(:twice)
     end
 
-    it 'does not retry a POST request, which could duplicate a submission' do
+    it 'does not retry a POST request' do
       expect { client.post '/test/endpoint', { attribute: 'value' } }.to raise_error AppStoreConnectApi::Error
       expect(net_http_mock).to have_received(:call).exactly(:once)
     end
@@ -454,7 +454,7 @@ RSpec.describe AppStoreConnectApi::Client do
     let(:url) { 'https://api.appstoreconnect.apple.com/test/endpoint' }
     let(:success) { { status: 200, body: '{"data":"response"}', headers: { content_type: 'application/json' } } }
 
-    it 'does not retry a POST that gets a gateway error, since App Store Connect may have applied it' do
+    it 'does not retry a POST that gets a gateway error' do
       stub_request(:post, url).to_return({ status: 504 }, success)
 
       expect { client.post '/test/endpoint', { attribute: 'value' } }.to raise_error AppStoreConnectApi::Error, 'HTTP error (504)'
